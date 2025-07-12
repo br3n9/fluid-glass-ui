@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* Couleurs de base */
+    --primary-hue: 220;
+    --accent-hue: 280;
+    --neutral-hue: 210;
+    
+    /* Système de couleurs adaptatif */
+    --bg-primary: hsl(var(--primary-hue), 15%, 95%);
+    --bg-glass: hsla(var(--primary-hue), 20%, 98%, 0.7);
+    --accent-primary: hsl(var(--accent-hue), 70%, 60%);
+    --text-primary: hsl(var(--neutral-hue), 15%, 20%);
+    --text-secondary: hsl(var(--neutral-hue), 10%, 50%);
+    
+    /* Espacements fluides */
+    --space-xs: clamp(0.5rem, 2vw, 0.75rem);
+    --space-sm: clamp(0.75rem, 3vw, 1rem);
+    --space-md: clamp(1rem, 4vw, 1.5rem);
+    --space-lg: clamp(1.5rem, 6vw, 2rem);
+    --space-xl: clamp(2rem, 8vw, 3rem);
+    
+    /* Typographie fluide */
+    --text-xs: clamp(0.75rem, 2vw, 0.875rem);
+    --text-sm: clamp(0.875rem, 2.5vw, 1rem);
+    --text-base: clamp(1rem, 3vw, 1.125rem);
+    --text-lg: clamp(1.125rem, 4vw, 1.25rem);
+    --text-xl: clamp(1.25rem, 5vw, 1.5rem);
+    --text-2xl: clamp(1.5rem, 6vw, 2rem);
+    
+    /* Rayons et ombres */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    
+    --shadow-sm: 0 2px 8px hsla(var(--neutral-hue), 20%, 0%, 0.1);
+    --shadow-md: 0 4px 16px hsla(var(--neutral-hue), 20%, 0%, 0.15);
+    --shadow-lg: 0 8px 32px hsla(var(--neutral-hue), 20%, 0%, 0.2);
+    
+    /* Animations */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Mode sombre */
+  [data-theme="dark"] {
+    --bg-primary: hsl(var(--primary-hue), 15%, 8%);
+    --bg-glass: hsla(var(--primary-hue), 20%, 15%, 0.7);
+    --text-primary: hsl(var(--neutral-hue), 15%, 90%);
+    --text-secondary: hsl(var(--neutral-hue), 10%, 70%);
+  }
+}
+
+@layer components {
+  .glass-surface {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsla(255, 255, 255, 0.2);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-normal);
+  }
+
+  .glass-surface:hover {
+    border-color: hsla(255, 255, 255, 0.3);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  .glass-card {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsla(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    transition: var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      hsla(255, 255, 255, 0.3), 
+      transparent
+    );
+  }
+
+  .glass-card:hover {
+    border-color: hsla(255, 255, 255, 0.2);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-fluid {
+    background: linear-gradient(135deg, 
+      hsl(var(--accent-hue), 70%, 60%), 
+      hsl(var(--accent-hue), 70%, 50%)
+    );
+    border: none;
+    border-radius: var(--radius-lg);
+    color: white;
+    cursor: pointer;
+    font-size: var(--text-base);
+    font-weight: 600;
+    padding: var(--space-sm) var(--space-md);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-fast);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .btn-fluid::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      transparent, 
+      hsla(255, 255, 255, 0.2), 
+      transparent
+    );
+    transition: var(--transition-normal);
+  }
+
+  .btn-fluid:hover::before {
+    left: 100%;
+  }
+
+  .btn-fluid:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-fluid:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .btn-fluid:disabled:hover {
+    transform: none;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--accent-primary);
+    color: var(--accent-primary);
+  }
+
+  .btn-outline:hover {
+    background: var(--accent-primary);
+    color: white;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid transparent;
+  }
+
+  .btn-ghost:hover {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border-color: hsla(255, 255, 255, 0.2);
+  }
+
+  .input-fluid {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsla(255, 255, 255, 0.2);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: var(--text-base);
+    padding: var(--space-sm) var(--space-md);
+    transition: var(--transition-fast);
+    width: 100%;
+  }
+
+  .input-fluid:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px hsla(var(--accent-hue), 70%, 60%, 0.2);
+    outline: none;
+  }
+
+  .input-fluid::placeholder {
+    color: var(--text-secondary);
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-slide-in {
+    animation: slide-in 0.3s ease-out;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.2s ease-out;
+  }
+}
