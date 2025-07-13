@@ -4,7 +4,6 @@
   "description": "A React UI library with a fluid glass design system.",
   "main": "./dist/fluid-glass-ui.umd.js",
   "module": "./dist/fluid-glass-ui.es.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/fluid-glass-ui.es.js",

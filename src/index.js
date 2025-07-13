@@ -40,3 +40,4 @@ export { default as TimelineComponent } from './components/TimelineComponent.jsx
 export { default as Toast } from './components/Toast.jsx';
 export { default as Toggle } from './components/Toggle.jsx';
 export { default as ViewModeSwitch } from './components/ViewModeSwitch.jsx';
+export { Card } from './components/Card.jsx';

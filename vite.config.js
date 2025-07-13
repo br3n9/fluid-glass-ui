@@ -1,12 +1,11 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import dts from 'vite-plugin-dts';
+
 
 export default defineConfig({
   plugins: [
     react(),
-    dts({ insertTypesEntry: true }),
   ],
   build: {
     lib: {
@@ -16,12 +15,13 @@ export default defineConfig({
       fileName: (format) => `fluid-glass-ui.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      external: ['react', 'react-dom', 'react/jsx-runtime', '@react-aria/interactions'],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
           'react/jsx-runtime': 'react/jsx-runtime',
+          '@react-aria/interactions': 'ReactAriaInteractions',
         },
       },
     },
