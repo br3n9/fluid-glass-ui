@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
+    /* Familles de polices */
+    --font-sans: 'Inter', sans-serif;
+    --font-display: 'Lexend', sans-serif;
+
     /* Couleurs de base */
     --primary-hue: 220;
     --accent-hue: 280;
@@ -32,6 +36,10 @@
     --text-lg: clamp(1.125rem, 4vw, 1.25rem);
     --text-xl: clamp(1.25rem, 5vw, 1.5rem);
     --text-2xl: clamp(1.5rem, 6vw, 2rem);
+    --text-3xl: clamp(1.875rem, 7vw, 2.25rem);
+    --text-4xl: clamp(2.25rem, 8vw, 3rem);
+    --text-5xl: clamp(3rem, 9vw, 3.75rem);
+    --text-6xl: clamp(3.75rem, 10vw, 4.5rem);
     
     /* Rayons et ombres */
     --radius-sm: 8px;

@@ -2,48 +2,34 @@
 
 import { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
-import Button from './Button';
+import Button from './Button.jsx';
 
 export default function ThemeSwitcher() {
-  const [theme, setTheme] = useState('light');
+  const [mode, setMode] = useState('light');
 
+  // Effect to load and apply saved mode on mount
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    setTheme(savedTheme);
-    if (savedTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    const savedMode = localStorage.getItem('mode') || 'light';
+    setMode(savedMode);
+    document.documentElement.setAttribute('data-theme', savedMode);
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    if (newTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+  // Function to toggle light/dark mode
+  const toggleMode = () => {
+    const newMode = mode === 'light' ? 'dark' : 'light';
+    setMode(newMode);
+    localStorage.setItem('mode', newMode);
+    document.documentElement.setAttribute('data-theme', newMode);
   };
 
   return (
-    <div className="flex items-center gap-4">
-      <Button 
-        onClick={toggleTheme}
-        startIcon={theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
-      >
-        Basculer vers {theme === 'light' ? 'sombre' : 'clair'}
-      </Button>
-
-      <div className="flex items-center gap-2">
-        <div
-          className={`w-6 h-6 rounded-full transition-colors ${theme === 'light' ? 'bg-yellow-400' : 'bg-blue-600'}`}
-        />
-        <span className="text-sm capitalize">Mode {theme}</span>
-      </div>
-    </div>
+    <Button 
+      onClick={toggleMode}
+      aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
+      startIcon={mode === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+    >
+      {mode === 'light' ? 'Dark Mode' : 'Light Mode'}
+    </Button>
   );
 }
 
