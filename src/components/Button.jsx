@@ -9,8 +9,8 @@ const Button = React.forwardRef(
       variant = "primary",
       size = "medium",
       isLoading = false,
-      startContent,
-      endContent,
+      startIcon,
+      endIcon,
       ...props
     },
     ref
@@ -40,10 +40,10 @@ const Button = React.forwardRef(
 
     return (
       <button ref={ref} className={finalClassName} disabled={isLoading || props.disabled} {...props}>
-        {isLoading && <div className="animate-spin rounded-full h-4 w-4 border-2 border-current border-t-transparent" />}
-        {!isLoading && startContent}
+        {isLoading && <span className="animate-spin rounded-full h-4 w-4 border-2 border-current border-t-transparent" />}
+        {!isLoading && <span className="btn-icon">{startIcon}</span>}
         {children}
-        {!isLoading && endContent}
+        {!isLoading && <span className="btn-icon">{endIcon}</span>}
       </button>
     );
   }

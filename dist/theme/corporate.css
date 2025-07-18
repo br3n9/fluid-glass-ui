@@ -1,0 +1,21 @@
+/* 
+ * Corporate Theme for Fluid Glass UI
+ * This is an example theme showing how to customize Fluid Glass UI
+ */
+
+:root {
+  /* Theme: Corporate */
+  --fg-primary-hue: 210;    /* Blue-based primary color */
+  --fg-accent-hue: 25;      /* Orange accent color */
+  --fg-neutral-hue: 220;    /* Slightly blue-tinted neutrals */
+  
+  --fg-success-hue: 145;    /* Teal-green for success */
+  --fg-warning-hue: 45;     /* Gold for warnings */
+  --fg-error-hue: 355;      /* Red for errors */
+  
+  /* Advanced customization */
+  --fg-primary-saturation: 30%;
+  --fg-accent-saturation: 85%;
+  --fg-glass-opacity: 0.75;
+  --fg-glass-blur: 15px;
+}

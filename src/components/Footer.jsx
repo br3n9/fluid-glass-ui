@@ -1,16 +1,15 @@
 "use client";
 
-import { Heart, Star, Mail } from 'lucide-react';
 import Link from './Link';
 import IconButton from './IconButton';
 
 const FooterLinkColumn = ({ title, links }) => (
   <div>
-    <h4 className="font-medium mb-3">{title}</h4>
-    <ul className="space-y-2 text-sm">
+    <h4 className="font-semibold text-base-content mb-4">{title}</h4>
+    <ul className="space-y-2">
       {links.map((link) => (
-        <li key={link.text}>
-          <Link href={link.href} className="text-gray-600 hover:text-gray-800">
+        <li key={link.href + link.text}>
+          <Link href={link.href} className="text-sm text-base-content/80 hover:text-primary transition-colors">
             {link.text}
           </Link>
         </li>
@@ -19,70 +18,35 @@ const FooterLinkColumn = ({ title, links }) => (
   </div>
 );
 
-const footerSections = [
-  {
-    title: 'Produit',
-    links: [
-      { text: 'Fonctionnalités', href: '#' },
-      { text: 'Tarifs', href: '#' },
-      { text: 'Documentation', href: '#' },
-    ],
-  },
-  {
-    title: 'Support',
-    links: [
-      { text: "Centre d'aide", href: '#' },
-      { text: 'Contact', href: '#' },
-      { text: 'Communauté', href: '#' },
-    ],
-  },
-  {
-    title: 'Entreprise',
-    links: [
-      { text: 'À propos', href: '#' },
-      { text: 'Carrières', href: '#' },
-      { text: 'Presse', href: '#' },
-    ],
-  },
-  {
-    title: 'Légal',
-    links: [
-      { text: 'Confidentialité', href: '#' },
-      { text: 'Conditions', href: '#' },
-      { text: 'Cookies', href: '#' },
-    ],
-  },
-];
+export default function Footer({ sections, socialLinks, copyrightText }) {
+  if (!sections || !socialLinks || !copyrightText) {
+    return null; 
+  }
 
-export default function Footer() {
   return (
-    <section className="glass-card">
-      <h3 className="text-xl font-semibold mb-6">Pied de Page</h3>
-
-      <div className="glass-surface p-6 rounded-lg">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {footerSections.map((section) => (
+    <footer className="glass-surface p-8 rounded-lg w-full">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {sections.map((section) => (
             <FooterLinkColumn key={section.title} title={section.title} links={section.links} />
           ))}
         </div>
 
-        <div className="mt-6 pt-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm text-gray-600">
-            © 2024 Fluid Glass Design. Tous droits réservés.
+        <div className="mt-8 pt-8 border-t border-base-300/50 flex flex-col sm:flex-row justify-between items-center">
+          <p className="text-sm text-base-content/70">
+            {copyrightText}
           </p>
-          <div className="flex items-center gap-4 mt-4 sm:mt-0">
-            <IconButton>
-              <Heart size={16} />
-            </IconButton>
-            <IconButton>
-              <Star size={16} />
-            </IconButton>
-            <IconButton>
-              <Mail size={16} />
-            </IconButton>
+          <div className="flex items-center gap-2 mt-4 sm:mt-0">
+            {socialLinks.map((social) => (
+              <IconButton asChild key={social.label} aria-label={social.label} variant="ghost">
+                <a href={social.href} target="_blank" rel="noopener noreferrer">
+                  {social.icon}
+                </a>
+              </IconButton>
+            ))}
           </div>
         </div>
       </div>
-    </section>
+    </footer>
   );
 }

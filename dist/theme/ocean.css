@@ -1,0 +1,15 @@
+:root {
+  /* Theme: Ocean */
+  --fg-primary-hue: 200;
+  --fg-accent-hue: 180;
+  --fg-neutral-hue: 190;
+  --fg-success-hue: 160;
+  --fg-warning-hue: 50;
+  --fg-error-hue: 10;
+  
+  /* Advanced customization */
+  --fg-primary-saturation: 25%;
+  --fg-accent-saturation: 60%;
+  --fg-glass-opacity: 0.8;
+  --fg-glass-blur: 25px;
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import HelperText from './HelperText';
 
 const Input = React.forwardRef(
   ({ label, name, startIcon, endIcon, className, error, helperText, ...props }, ref) => {
@@ -34,8 +35,8 @@ const Input = React.forwardRef(
             </div>
           )}
         </div>
-        {error && <p className="text-red-500 text-sm mt-1 flex items-center gap-1">{error}</p>}
-        {helperText && !error && <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">{helperText}</p>}
+        {error && <HelperText variant="error">{error}</HelperText>}
+        {helperText && !error && <HelperText variant="info">{helperText}</HelperText>}
       </div>
     );
   }

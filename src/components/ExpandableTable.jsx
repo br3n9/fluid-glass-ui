@@ -1,41 +1,51 @@
 "use client";
 
-"use client";
+import { useState } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
-import ExpandableTableComponent from './ExpandableTableComponent';
+export default function ExpandableTable({ data, renderItem, renderExpandedContent }) {
+  const [expandedRows, setExpandedRows] = useState({});
 
-export default function ExpandableTable() {
-  const tableData = [
-    {
-      id: 1,
-      name: 'Jean Dupont',
-      email: 'jean@example.com',
-      role: 'Admin',
-      status: 'Actif',
-      date: '2024-01-15',
-    },
-    {
-      id: 2,
-      name: 'Marie Martin',
-      email: 'marie@example.com',
-      role: 'User',
-      status: 'Inactif',
-      date: '2024-01-10',
-    },
-    {
-      id: 3,
-      name: 'Pierre Durand',
-      email: 'pierre@example.com',
-      role: 'User',
-      status: 'Actif',
-      date: '2024-01-20',
-    },
-  ];
+  const toggleRowExpansion = (id) => {
+    setExpandedRows((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  if (!data || data.length === 0) {
+    return <p className="text-center text-gray-500">Aucune donnée à afficher.</p>;
+  }
 
   return (
-    <section className="glass-card p-6">
-      <h3 className="text-xl font-semibold mb-6">Table Expansible</h3>
-      <ExpandableTableComponent data={tableData} />
-    </section>
+    <div className="space-y-2">
+      {data.map((item) => (
+        <div
+          key={item.id}
+          className="glass-card-border overflow-hidden rounded-lg"
+        >
+          <div
+            className="flex items-center justify-between p-4 cursor-pointer hover:bg-base-200/50"
+            onClick={() => toggleRowExpansion(item.id)}
+          >
+            <div className="flex-grow">
+              {renderItem(item)}
+            </div>
+            <div className="ml-4">
+              {expandedRows[item.id] ? (
+                <ChevronUp size={20} className="text-gray-500" />
+              ) : (
+                <ChevronDown size={20} className="text-gray-500" />
+              )}
+            </div>
+          </div>
+          {expandedRows[item.id] && (
+            <div className="px-4 pt-2 pb-4 bg-base-200/30 border-t border-base-300/50">
+              {renderExpandedContent(item)}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
   );
 }

@@ -1,0 +1,16 @@
+:root {
+  /* Theme: Default */
+  --fg-primary-hue: 220;
+  --fg-accent-hue: 280;
+  --fg-neutral-hue: 210;
+  
+  --fg-success-hue: 120;
+  --fg-warning-hue: 40;
+  --fg-error-hue: 0;
+  
+  /* Advanced customization */
+  --fg-primary-saturation: 15%;
+  --fg-accent-saturation: 70%;
+  --fg-glass-opacity: 0.7;
+  --fg-glass-blur: 20px;
+}

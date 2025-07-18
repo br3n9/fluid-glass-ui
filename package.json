@@ -9,7 +9,11 @@
       "import": "./dist/fluid-glass-ui.es.js",
       "require": "./dist/fluid-glass-ui.umd.js"
     },
-    "./style.css": "./dist/style.css"
+    "./styles": "./dist/style.css",
+    "./style.css": "./dist/style.css",
+    "./theme/default": "./dist/theme/default.css",
+    "./theme/ocean": "./dist/theme/ocean.css",
+    "./theme/*": "./dist/theme/*.css"
   },
   "files": [
     "dist"
@@ -61,13 +65,14 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
-    "lucide-react": "^0.400.0",
+    "lucide-react": "^0.525.0",
     "next-themes": "^0.4.6",
     "react-day-picker": "^9.8.0",
     "react-resizable-panels": "^3.0.3",
     "sonner": "^2.0.6",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "@react-aria/interactions": "^3.21.1"
   },
   "devDependencies": {
     "@radix-ui/react-accordion": "^1.2.11",
@@ -102,7 +107,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
-    "lucide-react": "^0.400.0",
+    "lucide-react": "^0.525.0",
     "next-themes": "^0.4.6",
     "postcss": "^8.4.39",
     "react": "^18.3.1",
@@ -115,6 +120,7 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.5.3",
     "vite": "^5.3.3",
-    "vite-plugin-dts": "^3.9.1"
+    "vite-plugin-dts": "^3.9.1",
+    "@react-aria/interactions": "^3.21.1"
   }
 }

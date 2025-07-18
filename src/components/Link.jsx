@@ -2,7 +2,7 @@
 
 import NextLink from 'next/link';
 
-export default function Link({ href, variant = 'standard', icon: Icon, children, className = '' }) {
+export default function Link({ href, variant = 'standard', icon, children, className = '' }) {
   const baseClasses = 'hover:underline';
   const variantClasses = {
     standard: 'text-accent-500 hover:text-accent-600',
@@ -19,7 +19,7 @@ export default function Link({ href, variant = 'standard', icon: Icon, children,
 
   return (
     <NextLink href={href} className={combinedClasses}>
-      {Icon && <Icon size={16} />}
+      {icon}
       {children}
     </NextLink>
   );

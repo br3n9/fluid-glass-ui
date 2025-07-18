@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
+import Link from "./Link.jsx";
 
 export default function Breadcrumb({ items = [] }) {
   return (
@@ -11,12 +12,9 @@ export default function Breadcrumb({ items = [] }) {
             <ChevronRight size={16} className="mx-2 text-gray-400" />
           )}
           {item.href ? (
-            <a
-              href={item.href}
-              className="text-accent-500 hover:text-accent-600 hover:underline"
-            >
+            <Link href={item.href}>
               {item.label}
-            </a>
+            </Link>
           ) : (
             <span className="text-gray-600">{item.label}</span>
           )}

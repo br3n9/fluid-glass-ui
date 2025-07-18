@@ -1,148 +1,232 @@
 "use client";
 
 import { useState } from 'react';
-import {
-  Home,
-  Users,
-  Settings,
-  BarChart3,
-  FileText,
-  Mail,
-  Calendar,
-  ChevronDown,
-  Menu,
-  X,
-  Search,
-  Bell,
-  User,
-} from 'lucide-react';
-import Input from './Input';
-import IconButton from './IconButton';
-import Avatar from './Avatar';
+import { Menu, X, Search, Bell, ChevronDown } from 'lucide-react';
 import Dropdown from './Dropdown';
+import IconButton from './IconButton';
 import Button from './Button';
+import Avatar from './Avatar';
 
-export default function TopNavigation() {
-  const [activeTab, setActiveTab] = useState('home');
+export default function TopNavigation({
+  logo,
+  navItems = [],
+  userDropdownItems = [],
+  userAvatar,
+  userName,
+  notificationCount = 0,
+  onSearch,
+  onNavItemClick,
+  showSearch = true,
+  showNotifications = true,
+}) {
+  const [activeTab, setActiveTab] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const navItems = [
-    { id: 'home', label: 'Accueil', icon: Home },
-    { id: 'users', label: 'Utilisateurs', icon: Users },
-    { id: 'analytics', label: 'Analytiques', icon: BarChart3 },
-    { id: 'documents', label: 'Documents', icon: FileText },
-    { id: 'messages', label: 'Messages', icon: Mail },
-    { id: 'calendar', label: 'Calendrier', icon: Calendar },
-    { id: 'settings', label: 'Paramètres', icon: Settings },
-  ];
+  // Définir l'onglet actif initial si des éléments de navigation sont fournis
+  useState(() => {
+    if (navItems.length > 0 && !activeTab) {
+      setActiveTab(navItems[0].id);
+    }
+  }, [navItems]);
 
-  const userDropdownItems = [
-    {
-      label: 'Profil',
-      icon: <User size={16} className="mr-2" />,
-      onClick: () => console.log('Profile clicked'),
-    },
-    {
-      label: 'Paramètres',
-      icon: <Settings size={16} className="mr-2" />,
-      onClick: () => console.log('Settings clicked'),
-    },
-    { isSeparator: true },
-    {
-      label: 'Déconnexion',
-      onClick: () => console.log('Logout clicked'),
-      isDanger: true,
-    },
-  ];
+  const handleNavItemClick = (item) => {
+    setActiveTab(item.id);
+    if (onNavItemClick) {
+      onNavItemClick(item);
+    }
+  };
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    if (onSearch) {
+      onSearch(e.target.value);
+    }
+  };
 
   return (
-    <section className="glass-card">
-      <h3 className="text-xl font-semibold mb-6">Navigation Principale</h3>
+    <div className="nav-fluid">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-6">
+          {logo && <div className="font-bold text-lg">{logo}</div>}
 
-      <div className="nav-fluid">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <div className="font-bold text-lg">Logo</div>
+          {/* Navigation principale - visible uniquement sur desktop */}
+          <nav className="hidden md:flex space-x-8">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                className={`flex items-center gap-2 text-sm font-medium ${activeTab === item.id ? 'text-accent-600' : 'text-gray-600 hover:text-gray-800'}`}
+                onClick={() => handleNavItemClick(item)}
+              >
+                {item.icon && <item.icon size={16} />}
+                {item.label}
+              </button>
+            ))}
+          </nav>
+        </div>
 
-            <nav className="hidden md:flex space-x-1">
-              {navItems.slice(0, 4).map((item) => (
-                <Button
-                  key={item.id}
-                  variant={activeTab === item.id ? 'subtle' : 'ghost'}
-                  onClick={() => setActiveTab(item.id)}
-                  startIcon={<item.icon size={16} />}
-                >
-                  {item.label}
-                </Button>
-              ))}
-            </nav>
-          </div>
+        <div className="flex items-center gap-2">
+          {/* Boutons d'action */}
+          <div className="hidden md:flex items-center gap-2">
+            {showSearch && (
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Rechercher..."
+                  className="py-1 pl-10 pr-4 rounded-lg bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500 w-64"
+                  value={searchQuery}
+                  onChange={handleSearch}
+                />
+                <Search
+                  size={16}
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                />
+              </div>
+            )}
 
-          <div className="flex items-center gap-2">
-            <div className="hidden sm:block">
-              <Input
-                placeholder="Rechercher..."
-                startIcon={<Search size={16} className="text-gray-400" />}
-                className="w-64"
-              />
-            </div>
-
-            <div className="relative">
+            {showNotifications && (
               <IconButton
                 icon={<Bell size={20} />}
                 aria-label="Notifications"
+                variant="ghost"
+                badge={notificationCount > 0 ? notificationCount : undefined}
               />
-              <span className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
-            </div>
+            )}
 
-            <Dropdown
-              trigger={
-                <button className="flex items-center gap-2 p-1 hover:bg-glass-light rounded-full">
-                  <Avatar
-                    src="/placeholder-user.jpg"
-                    alt="User Avatar"
-                    fallback="U"
-                    size="sm"
-                  />
-                  <ChevronDown size={16} className="text-gray-500" />
-                </button>
-              }
-              items={userDropdownItems}
-            />
-
-            <div className="md:hidden">
-              <IconButton
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                icon={mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-                aria-label="Toggle mobile menu"
-              />
-            </div>
+            {/* Menu utilisateur */}
+            {userDropdownItems.length > 0 && (
+              <Dropdown>
+                <Dropdown.Trigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="flex items-center gap-2"
+                    endIcon={<ChevronDown size={16} />}
+                  >
+                    {userAvatar ? (
+                      typeof userAvatar === 'string' ? (
+                        <Avatar
+                          src={userAvatar}
+                          alt={userName || 'User'}
+                          size="sm"
+                          fallback={(userName || 'U').charAt(0)}
+                        />
+                      ) : (
+                        userAvatar
+                      )
+                    ) : (
+                      <Avatar
+                        size="sm"
+                        fallback={(userName || 'U').charAt(0)}
+                      />
+                    )}
+                    {userName && <span className="font-medium">{userName}</span>}
+                  </Button>
+                </Dropdown.Trigger>
+                <Dropdown.Menu>
+                  {userDropdownItems.map((item, index) =>
+                    item.isSeparator ? (
+                      <Dropdown.Separator key={`sep-${index}`} />
+                    ) : (
+                      <Dropdown.Item
+                        key={`${item.label}-${index}`}
+                        onClick={item.onClick}
+                        className={item.isDanger ? 'text-red-600 hover:text-red-700' : ''}
+                      >
+                        {item.icon}
+                        {item.label}
+                      </Dropdown.Item>
+                    )
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
           </div>
+
+          {/* Bouton menu mobile */}
+          <IconButton
+            icon={mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden"
+            aria-label="Menu"
+            variant="ghost"
+          />
         </div>
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden mt-4 pt-4 border-t border-gray-200">
-            <nav className="flex flex-col space-y-2">
-              {navItems.map((item) => (
-                <Button
-                  key={item.id}
-                  variant={activeTab === item.id ? 'subtle' : 'ghost'}
-                  onClick={() => {
-                    setActiveTab(item.id);
-                    setMobileMenuOpen(false);
-                  }}
-                  startIcon={<item.icon size={16} />}
-                  className="w-full justify-start"
-                >
-                  {item.label}
-                </Button>
-              ))}
-            </nav>
-          </div>
-        )}
       </div>
-    </section>
+
+      {/* Menu mobile */}
+      {mobileMenuOpen && (
+        <div className="md:hidden mt-4 py-4 border-t">
+          <nav className="flex flex-col space-y-4">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                className={`flex items-center gap-2 text-sm font-medium ${activeTab === item.id ? 'text-accent-600' : 'text-gray-600'}`}
+                onClick={() => {
+                  handleNavItemClick(item);
+                  setMobileMenuOpen(false);
+                }}
+              >
+                {item.icon && <item.icon size={18} />}
+                {item.label}
+              </button>
+            ))}
+            
+            <div className="pt-4 border-t">
+              {showSearch && (
+                <div className="relative mb-4">
+                  <input
+                    type="text"
+                    placeholder="Rechercher..."
+                    className="w-full py-2 pl-10 pr-4 rounded-lg bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                  />
+                  <Search
+                    size={16}
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                  />
+                </div>
+              )}
+              
+              {userName && (
+                <div className="flex items-center gap-3 mb-2">
+                  {userAvatar ? (
+                    typeof userAvatar === 'string' ? (
+                      <Avatar
+                        src={userAvatar}
+                        alt={userName}
+                        size="sm"
+                        fallback={userName.charAt(0)}
+                      />
+                    ) : (
+                      userAvatar
+                    )
+                  ) : (
+                    <Avatar
+                      size="sm"
+                      fallback={userName.charAt(0)}
+                    />
+                  )}
+                  <span className="font-medium">{userName}</span>
+                </div>
+              )}
+              
+              {userDropdownItems
+                .filter((item) => !item.isSeparator)
+                .map((item, index) => (
+                  <button
+                    key={`${item.label}-${index}`}
+                    onClick={item.onClick}
+                    className={`flex items-center gap-2 text-sm font-medium py-2 w-full ${item.isDanger ? 'text-red-600' : 'text-gray-600'}`}
+                  >
+                    {item.icon}
+                    {item.label}
+                  </button>
+                ))}
+            </div>
+          </nav>
+        </div>
+      )}
+    </div>
   );
-}
 }

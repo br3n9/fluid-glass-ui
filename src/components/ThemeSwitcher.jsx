@@ -1,34 +1,20 @@
 "use client";
 
-import { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import Button from './Button.jsx';
+import { useThemeContext } from './ThemeProvider';
 
-export default function ThemeSwitcher() {
-  const [mode, setMode] = useState('light');
-
-  // Effect to load and apply saved mode on mount
-  useEffect(() => {
-    const savedMode = localStorage.getItem('mode') || 'light';
-    setMode(savedMode);
-    document.documentElement.setAttribute('data-theme', savedMode);
-  }, []);
-
-  // Function to toggle light/dark mode
-  const toggleMode = () => {
-    const newMode = mode === 'light' ? 'dark' : 'light';
-    setMode(newMode);
-    localStorage.setItem('mode', newMode);
-    document.documentElement.setAttribute('data-theme', newMode);
-  };
+export default function ThemeSwitcher({ showLabel = true }) {
+  // Utiliser le contexte de thème au lieu de l'état local
+  const { theme, toggleTheme } = useThemeContext();
 
   return (
     <Button 
-      onClick={toggleMode}
-      aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
-      startIcon={mode === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+      onClick={toggleTheme}
+      aria-label={`Passer au mode ${theme === 'light' ? 'sombre' : 'clair'}`}
+      startIcon={theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
     >
-      {mode === 'light' ? 'Dark Mode' : 'Light Mode'}
+      {showLabel && (theme === 'light' ? 'Mode sombre' : 'Mode clair')}
     </Button>
   );
 }

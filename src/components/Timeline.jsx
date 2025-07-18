@@ -1,45 +1,61 @@
 "use client";
 
-"use client";
+import { User, FileText, Edit, Trash2, Clock } from "lucide-react";
 
-import TimelineComponent from './TimelineComponent';
+const getIcon = (type) => {
+  switch (type) {
+    case "user":
+      return <User size={16} className="text-white" />;
+    case "order":
+      return <FileText size={16} className="text-white" />;
+    case "update":
+      return <Edit size={16} className="text-white" />;
+    case "delete":
+      return <Trash2 size={16} className="text-white" />;
+    default:
+      return null;
+  }
+};
 
-export default function Timeline() {
-  const timelineData = [
-    {
-      id: 1,
-      type: 'user',
-      title: 'Nouvel utilisateur inscrit',
-      user: 'Jean Dupont',
-      time: '2 min',
-    },
-    {
-      id: 2,
-      type: 'order',
-      title: 'Nouvelle commande',
-      user: 'Marie Martin',
-      time: '15 min',
-    },
-    {
-      id: 3,
-      type: 'update',
-      title: 'Mise à jour du profil',
-      user: 'Pierre Durand',
-      time: '1 h',
-    },
-    {
-      id: 4,
-      type: 'delete',
-      title: "Suppression d'un élément",
-      user: 'Sophie Leroy',
-      time: '2 h',
-    },
-  ];
+const getColor = (type) => {
+  switch (type) {
+    case "user":
+      return "bg-blue-500";
+    case "order":
+      return "bg-green-500";
+    case "update":
+      return "bg-yellow-500";
+    case "delete":
+      return "bg-red-500";
+    default:
+      return "bg-gray-500";
+  }
+};
+
+export default function Timeline({ items }) {
+  if (!items || items.length === 0) {
+    return null;
+  }
 
   return (
-    <section className="glass-card p-6">
-      <h3 className="text-xl font-semibold mb-6">Timeline</h3>
-      <TimelineComponent items={timelineData} />
-    </section>
+    <div className="space-y-4">
+      {items.map((item) => (
+        <div key={item.id} className="flex items-start gap-4">
+          <div
+            className={`w-8 h-8 rounded-full flex items-center justify-center ${getColor(item.type)}`}
+          >
+            {getIcon(item.type)}
+          </div>
+          <div className="flex-1">
+            <p className="font-medium">{item.title}</p>
+            <p className="text-sm text-gray-600">par {item.user}</p>
+            <p className="text-xs text-gray-500 flex items-center gap-1">
+              <Clock size={12} />
+              il y a {item.time}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
