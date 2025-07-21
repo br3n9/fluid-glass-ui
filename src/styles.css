@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 /* Variables CSS personnalisées pour le Fluid Glass Design */
 :root {
@@ -17,21 +17,29 @@
   --fg-accent-saturation: 70%;
   --fg-glass-opacity: 0.7;
   --fg-glass-blur: 20px;
-  
+
   /* Système de couleurs adaptatif */
-  --fg-bg-primary: hsl(var(--fg-primary-hue), var(--fg-primary-saturation), 95%);
+  --fg-bg-primary: hsl(
+    var(--fg-primary-hue),
+    var(--fg-primary-saturation),
+    95%
+  );
   --fg-bg-glass: hsla(var(--fg-primary-hue), 20%, 98%, var(--fg-glass-opacity));
-  --fg-accent-primary: hsl(var(--fg-accent-hue), var(--fg-accent-saturation), 60%);
+  --fg-accent-primary: hsl(
+    var(--fg-accent-hue),
+    var(--fg-accent-saturation),
+    60%
+  );
   --fg-text-primary: hsl(var(--fg-neutral-hue), 15%, 20%);
   --fg-text-secondary: hsl(var(--fg-neutral-hue), 10%, 50%);
-  
+
   /* Espacements fluides */
   --fg-space-xs: clamp(0.5rem, 2vw, 0.75rem);
   --fg-space-sm: clamp(0.75rem, 3vw, 1rem);
   --fg-space-md: clamp(1rem, 4vw, 1.5rem);
   --fg-space-lg: clamp(1.5rem, 6vw, 2rem);
   --fg-space-xl: clamp(2rem, 8vw, 3rem);
-  
+
   /* Typographie fluide */
   --fg-text-xs: clamp(0.75rem, 2vw, 0.875rem);
   --fg-text-sm: clamp(0.875rem, 2.5vw, 1rem);
@@ -39,17 +47,17 @@
   --fg-text-lg: clamp(1.125rem, 4vw, 1.25rem);
   --fg-text-xl: clamp(1.25rem, 5vw, 1.5rem);
   --fg-text-2xl: clamp(1.5rem, 6vw, 2rem);
-  
+
   /* Rayons et ombres */
   --fg-radius-sm: 8px;
   --fg-radius-md: 12px;
   --fg-radius-lg: 16px;
   --fg-radius-xl: 24px;
-  
+
   --fg-shadow-sm: 0 2px 8px hsla(var(--fg-neutral-hue), 20%, 0%, 0.1);
   --fg-shadow-md: 0 4px 16px hsla(var(--fg-neutral-hue), 20%, 0%, 0.15);
   --fg-shadow-lg: 0 8px 32px hsla(var(--fg-neutral-hue), 20%, 0%, 0.2);
-  
+
   /* Animations */
   --fg-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --fg-transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -66,8 +74,17 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --fg-bg-primary: hsl(var(--fg-primary-hue), var(--fg-primary-saturation), 8%);
-    --fg-bg-glass: hsla(var(--fg-primary-hue), 20%, 15%, var(--fg-glass-opacity));
+    --fg-bg-primary: hsl(
+      var(--fg-primary-hue),
+      var(--fg-primary-saturation),
+      8%
+    );
+    --fg-bg-glass: hsla(
+      var(--fg-primary-hue),
+      20%,
+      15%,
+      var(--fg-glass-opacity)
+    );
     --fg-text-primary: hsl(var(--fg-neutral-hue), 15%, 90%);
     --fg-text-secondary: hsl(var(--fg-neutral-hue), 10%, 70%);
   }
@@ -81,7 +98,7 @@
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   background: var(--fg-bg-primary);
   color: var(--fg-text-primary);
   line-height: 1.6;
@@ -131,19 +148,19 @@ body {
     padding: var(--fg-space-md);
     transition: var(--fg-transition-normal);
     position: relative;
-    overflow: hidden;
   }
 
   .glass-card::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, 
-      transparent, 
-      hsla(255, 255, 255, 0.3), 
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsla(255, 255, 255, 0.3),
       transparent
     );
   }
@@ -155,122 +172,128 @@ body {
   }
 
   /* Card pressable */
-.glass-card.pressable {
-  cursor: pointer;
-}
+  .glass-card.pressable {
+    cursor: pointer;
+  }
 
-.glass-card.pressable:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: var(--fg-shadow-lg);
-}
+  .glass-card.pressable:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--fg-shadow-lg);
+  }
 
-.glass-card.pressable:active {
-  transform: translateY(0) scale(0.98);
-  transition: var(--fg-transition-fast);
-}
+  .glass-card.pressable:active {
+    transform: translateY(0) scale(0.98);
+    transition: var(--fg-transition-fast);
+  }
 
-.glass-card.pressable:focus-visible {
-  outline: 2px solid var(--fg-accent-primary);
-  outline-offset: 2px;
-}
+  .glass-card.pressable:focus-visible {
+    outline: 2px solid var(--fg-accent-primary);
+    outline-offset: 2px;
+  }
 
-/* Card Header */
-.card-header {
-  margin-bottom: var(--fg-space-sm);
-}
+  /* Card Header */
+  .card-header {
+    margin-bottom: var(--fg-space-sm);
+  }
 
-.card-title {
-  font-size: var(--fg-text-lg);
-  font-weight: 600;
-  color: var(--fg-text-primary);
-  margin: 0 0 var(--fg-space-xs) 0;
-  line-height: 1.2;
-}
+  .card-title {
+    font-size: var(--fg-text-lg);
+    font-weight: 600;
+    color: var(--fg-text-primary);
+    margin: 0 0 var(--fg-space-xs) 0;
+    line-height: 1.2;
+  }
 
-.card-description {
-  font-size: var(--fg-text-sm);
-  color: hsl(var(--fg-neutral-hue), 15%, 50%);
-  margin: 0;
-  line-height: 1.4;
-}
+  .card-description {
+    font-size: var(--fg-text-sm);
+    color: hsl(var(--fg-neutral-hue), 15%, 50%);
+    margin: 0;
+    line-height: 1.4;
+  }
 
-/* Card Body */
-.card-body {
-  color: var(--fg-text-primary);
-  line-height: 1.6;
-}
+  /* Card Body */
+  .card-body {
+    color: var(--fg-text-primary);
+    line-height: 1.6;
+  }
 
-/* Card Footer */
-.card-footer {
-  margin-top: var(--fg-space-md);
-  display: flex;
-  gap: var(--fg-space-sm);
-  align-items: center;
-  justify-content: flex-end;
-}
+  /* Card Footer */
+  .card-footer {
+    margin-top: var(--fg-space-md);
+    display: flex;
+    gap: var(--fg-space-sm);
+    align-items: center;
+    justify-content: flex-end;
+  }
 
-/* Variantes de couleurs pour les cartes */
-.card-primary {
-  background: linear-gradient(135deg, 
-    hsla(var(--fg-primary-hue), 60%, 95%, 0.8),
-    hsla(var(--fg-primary-hue), 60%, 90%, 0.8)
-  );
-  border-color: hsl(var(--fg-primary-hue), 60%, 80%);
-}
+  /* Variantes de couleurs pour les cartes */
+  .card-primary {
+    background: linear-gradient(
+      135deg,
+      hsla(var(--fg-primary-hue), 60%, 95%, 0.8),
+      hsla(var(--fg-primary-hue), 60%, 90%, 0.8)
+    );
+    border-color: hsl(var(--fg-primary-hue), 60%, 80%);
+  }
 
-.card-accent {
-  background: linear-gradient(135deg, 
-    hsla(var(--fg-accent-hue), 60%, 95%, 0.8),
-    hsla(var(--fg-accent-hue), 60%, 90%, 0.8)
-  );
-  border-color: hsl(var(--fg-accent-hue), 60%, 80%);
-}
+  .card-accent {
+    background: linear-gradient(
+      135deg,
+      hsla(var(--fg-accent-hue), 60%, 95%, 0.8),
+      hsla(var(--fg-accent-hue), 60%, 90%, 0.8)
+    );
+    border-color: hsl(var(--fg-accent-hue), 60%, 80%);
+  }
 
-.card-success {
-  background: linear-gradient(135deg, 
-    hsla(120, 60%, 95%, 0.8),
-    hsla(120, 60%, 90%, 0.8)
-  );
-  border-color: hsl(120, 60%, 80%);
-}
+  .card-success {
+    background: linear-gradient(
+      135deg,
+      hsla(120, 60%, 95%, 0.8),
+      hsla(120, 60%, 90%, 0.8)
+    );
+    border-color: hsl(120, 60%, 80%);
+  }
 
-.card-warning {
-  background: linear-gradient(135deg, 
-    hsla(45, 80%, 95%, 0.8),
-    hsla(45, 80%, 90%, 0.8)
-  );
-  border-color: hsl(45, 80%, 80%);
-}
+  .card-warning {
+    background: linear-gradient(
+      135deg,
+      hsla(45, 80%, 95%, 0.8),
+      hsla(45, 80%, 90%, 0.8)
+    );
+    border-color: hsl(45, 80%, 80%);
+  }
 
-.card-error {
-  background: linear-gradient(135deg, 
-    hsla(0, 60%, 95%, 0.8),
-    hsla(0, 60%, 90%, 0.8)
-  );
-  border-color: hsl(0, 60%, 80%);
-}
+  .card-error {
+    background: linear-gradient(
+      135deg,
+      hsla(0, 60%, 95%, 0.8),
+      hsla(0, 60%, 90%, 0.8)
+    );
+    border-color: hsl(0, 60%, 80%);
+  }
 
-/* Taille compacte */
-.card-compact {
-  padding: var(--fg-space-sm);
-}
+  /* Taille compacte */
+  .card-compact {
+    padding: var(--fg-space-sm);
+  }
 
-.card-compact .card-header {
-  margin-bottom: var(--fg-space-xs);
-}
+  .card-compact .card-header {
+    margin-bottom: var(--fg-space-xs);
+  }
 
-.card-compact .card-title {
-  font-size: var(--fg-text-base);
-}
+  .card-compact .card-title {
+    font-size: var(--fg-text-base);
+  }
 
-.card-compact .card-footer {
-  margin-top: var(--fg-space-sm);
-}
+  .card-compact .card-footer {
+    margin-top: var(--fg-space-sm);
+  }
 
-/* Boutons fluides */
+  /* Boutons fluides */
   .btn-fluid {
-    background: linear-gradient(135deg, 
-      hsl(var(--fg-accent-hue), var(--fg-accent-saturation), 60%), 
+    background: linear-gradient(
+      135deg,
+      hsl(var(--fg-accent-hue), var(--fg-accent-saturation), 60%),
       hsl(var(--fg-accent-hue), var(--fg-accent-saturation), 50%)
     );
     border: none;
@@ -290,15 +313,16 @@ body {
   }
 
   .btn-fluid::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, 
-      transparent, 
-      hsla(255, 255, 255, 0.2), 
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsla(255, 255, 255, 0.2),
       transparent
     );
     transition: var(--fg-transition-normal);
@@ -355,12 +379,13 @@ body {
     padding: var(--fg-space-sm) var(--fg-space-md);
     transition: var(--fg-transition-fast);
     width: 100%;
+    border-color: var(--fg-accent-primary);
+    box-shadow: 0 0 0 2px hsla(var(--fg-accent-hue), 70%, 60%, 0.2);
+    outline: none;
   }
 
   .input-fluid:focus {
-    border-color: var(--fg-accent-primary);
-    box-shadow: 0 0 0 3px hsla(var(--fg-accent-hue), 70%, 60%, 0.2);
-    outline: none;
+    box-shadow: 0 0 0 2px hsla(var(--fg-accent-hue), 70%, 60%, 0.5);
   }
 
   .input-fluid::placeholder {
@@ -374,7 +399,7 @@ body {
     padding: var(--fg-space-sm) var(--fg-space-md);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 30;
   }
 
   .nav-item {
@@ -450,13 +475,14 @@ body {
   }
 
   .progress-fluid::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
-    background: linear-gradient(90deg, 
-      var(--fg-accent-primary), 
+    background: linear-gradient(
+      90deg,
+      var(--fg-accent-primary),
       hsl(var(--fg-accent-hue), 70%, 70%)
     );
     border-radius: var(--fg-radius-lg);
@@ -476,7 +502,7 @@ body {
   }
 
   .toggle-fluid::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 2px;
     left: 2px;
@@ -594,7 +620,9 @@ body {
 
 /* Animation de chargement */
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-spin {

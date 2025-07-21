@@ -48,6 +48,12 @@ export { default as Spinner } from './components/Spinner.jsx';
 export { default as Stack } from './components/Stack.jsx';
 export { default as StatCard } from './components/StatCard.jsx';
 export { default as Stepper } from './components/Stepper.jsx';
+export { default as Table } from './components/Table/Table.jsx';
+export { default as TableBody } from './components/Table/TableBody.jsx';
+export { default as TableCell } from './components/Table/TableCell.jsx';
+export { default as TableColumn } from './components/Table/TableColumn.jsx';
+export { default as TableHeader } from './components/Table/TableHeader.jsx';
+export { default as TableRow } from './components/Table/TableRow.jsx';
 export { default as Tabs } from './components/Tab.jsx'; // Note: component is named Tabs in the file
 export { default as Textarea } from './components/Textarea.jsx';
 export { ThemeProvider } from './components/ThemeProvider.jsx';
@@ -58,3 +64,6 @@ export { default as Toggle } from './components/Toggle.jsx';
 export { default as TopNavigation } from './components/TopNavigation.jsx';
 export { default as ViewModeSwitch } from './components/ViewModeSwitch.jsx';
 export { default as HelperText } from './components/HelperText.jsx';
+export { ToastProvider } from './components/Toast.jsx';
+export { useToast } from './components/Toast.jsx';
+

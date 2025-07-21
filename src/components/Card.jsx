@@ -10,7 +10,7 @@ const Card = React.forwardRef((props, ref) => {
   const {
     className,
     children,
-    isPressable = true,
+    isPressable = false,
     onPress,
     onPressStart,
     onPressEnd,
