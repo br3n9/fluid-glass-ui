@@ -22,6 +22,7 @@ export { default as CollapsibleSidebar } from './components/CollapsibleSidebar.j
 export { default as Container } from './components/Container.jsx';
 export { default as ContextMenu } from './components/ContextMenu.jsx';
 export { default as DataCard } from './components/DataCard.jsx';
+export { default as DocumentUploader } from './components/DocumentUploader.jsx';
 export { default as Drawer } from './components/Drawer.jsx';
 export { default as Dropdown } from './components/Dropdown.jsx';
 export { default as EmptyState } from './components/EmptyState.jsx';
@@ -33,7 +34,13 @@ export { default as Input } from './components/Input.jsx';
 export { default as InteractiveTable } from './components/InteractiveTable.jsx';
 export { default as Label } from './components/Label.jsx';
 export { default as Link } from './components/Link.jsx';
-export { default as Modal } from './components/Modal.jsx';
+export { default as Modal } from './components/Modal';
+export { default as ModalBody } from './components/ModalBody.jsx';
+export { default as ModalFooter } from './components/ModalFooter.jsx';
+export { default as ModalHeader } from './components/ModalHeader.jsx';
+
+// Hooks
+export { useModalLayout } from './hooks/useModalLayout.js';
 export { default as Notification } from './components/Notification.jsx';
 export { default as Pagination } from './components/Pagination.jsx';
 export { default as ProgressBar } from './components/ProgressBar.jsx';

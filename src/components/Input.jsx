@@ -24,7 +24,7 @@ const Input = React.forwardRef(
         )}
         <div className="relative">
           {startIcon && (
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <div className="absolute left-3 top-1/2 transform -translate-y-1/2" style={{ color: 'var(--fg-icon-primary)' }}>
               {React.cloneElement(startIcon, { size: 16 })}
             </div>
           )}

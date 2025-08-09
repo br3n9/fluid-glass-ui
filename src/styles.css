@@ -1,8 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 /* Variables CSS personnalisées pour le Fluid Glass Design */
 :root {
@@ -32,6 +32,26 @@
   );
   --fg-text-primary: hsl(var(--fg-neutral-hue), 15%, 20%);
   --fg-text-secondary: hsl(var(--fg-neutral-hue), 10%, 50%);
+
+  /* Variables pour bordures adaptatives */
+  --fg-border-glass-light: hsla(var(--fg-neutral-hue), 20%, 100%, 0.2);
+  --fg-border-glass-medium: hsla(var(--fg-neutral-hue), 20%, 100%, 0.3);
+  --fg-border-glass-strong: hsla(var(--fg-neutral-hue), 20%, 100%, 0.4);
+  
+  /* Variables pour overlays et backdrops */
+  --fg-overlay-light: hsla(var(--fg-neutral-hue), 20%, 0%, 0.3);
+  --fg-overlay-medium: hsla(var(--fg-neutral-hue), 20%, 0%, 0.5);
+  --fg-overlay-strong: hsla(var(--fg-neutral-hue), 20%, 0%, 0.7);
+  
+  /* Variables pour les états interactifs */
+  --fg-interactive-hover: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 90%, 0.1);
+  --fg-interactive-active: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 85%, 0.2);
+  --fg-interactive-focus: hsla(var(--fg-accent-hue), var(--fg-accent-saturation), 60%, 0.3);
+  
+  /* Variables pour les icônes et éléments secondaires */
+  --fg-icon-primary: var(--fg-text-secondary);
+  --fg-icon-secondary: var(--fg-text-muted);
+  --fg-icon-disabled: hsla(var(--fg-neutral-hue), 10%, 50%, 0.5);
 
   /* Espacements fluides */
   --fg-space-xs: clamp(0.5rem, 2vw, 0.75rem);
@@ -70,6 +90,26 @@
   --fg-bg-glass: hsla(var(--fg-primary-hue), 20%, 15%, var(--fg-glass-opacity));
   --fg-text-primary: hsl(var(--fg-neutral-hue), 15%, 90%);
   --fg-text-secondary: hsl(var(--fg-neutral-hue), 10%, 70%);
+
+  /* Bordures pour mode sombre */
+  --fg-border-glass-light: hsla(var(--fg-neutral-hue), 15%, 100%, 0.1);
+  --fg-border-glass-medium: hsla(var(--fg-neutral-hue), 15%, 100%, 0.15);
+  --fg-border-glass-strong: hsla(var(--fg-neutral-hue), 15%, 100%, 0.25);
+  
+  /* Overlays pour mode sombre */
+  --fg-overlay-light: hsla(var(--fg-neutral-hue), 20%, 0%, 0.4);
+  --fg-overlay-medium: hsla(var(--fg-neutral-hue), 20%, 0%, 0.6);
+  --fg-overlay-strong: hsla(var(--fg-neutral-hue), 20%, 0%, 0.8);
+  
+  /* États interactifs pour mode sombre */
+  --fg-interactive-hover: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 15%, 0.3);
+  --fg-interactive-active: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 20%, 0.4);
+  --fg-interactive-focus: hsla(var(--fg-accent-hue), var(--fg-accent-saturation), 50%, 0.4);
+  
+  /* Icônes pour mode sombre */
+  --fg-icon-primary: var(--fg-text-secondary);
+  --fg-icon-secondary: var(--fg-text-muted);
+  --fg-icon-disabled: hsla(var(--fg-neutral-hue), 10%, 70%, 0.3);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -87,6 +127,26 @@
     );
     --fg-text-primary: hsl(var(--fg-neutral-hue), 15%, 90%);
     --fg-text-secondary: hsl(var(--fg-neutral-hue), 10%, 70%);
+
+    /* Bordures pour mode sombre automatique */
+    --fg-border-glass-light: hsla(var(--fg-neutral-hue), 15%, 100%, 0.1);
+    --fg-border-glass-medium: hsla(var(--fg-neutral-hue), 15%, 100%, 0.15);
+    --fg-border-glass-strong: hsla(var(--fg-neutral-hue), 15%, 100%, 0.25);
+    
+    /* Overlays pour mode sombre automatique */
+    --fg-overlay-light: hsla(var(--fg-neutral-hue), 20%, 0%, 0.4);
+    --fg-overlay-medium: hsla(var(--fg-neutral-hue), 20%, 0%, 0.6);
+    --fg-overlay-strong: hsla(var(--fg-neutral-hue), 20%, 0%, 0.8);
+    
+    /* États interactifs pour mode sombre automatique */
+    --fg-interactive-hover: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 15%, 0.3);
+    --fg-interactive-active: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 20%, 0.4);
+    --fg-interactive-focus: hsla(var(--fg-accent-hue), var(--fg-accent-saturation), 50%, 0.4);
+    
+    /* Icônes pour mode sombre automatique */
+    --fg-icon-primary: hsl(var(--fg-neutral-hue), 10%, 70%);
+    --fg-icon-secondary: hsl(var(--fg-neutral-hue), 10%, 50%);
+    --fg-icon-disabled: hsla(var(--fg-neutral-hue), 10%, 70%, 0.3);
   }
 }
 
@@ -128,14 +188,14 @@ body {
   .glass-surface {
     background: var(--fg-bg-glass);
     backdrop-filter: blur(var(--fg-glass-blur));
-    border: 1px solid hsla(255, 255, 255, 0.2);
+    border: 1px solid var(--fg-border-glass-medium);
     border-radius: var(--fg-radius-md);
     box-shadow: var(--fg-shadow-md);
     transition: var(--fg-transition-normal);
   }
 
   .glass-surface:hover {
-    border-color: hsla(255, 255, 255, 0.3);
+    border-color: var(--fg-border-glass-strong);
     box-shadow: var(--fg-shadow-lg);
     transform: translateY(-2px);
   }
@@ -143,7 +203,7 @@ body {
   .glass-card {
     background: var(--fg-bg-glass);
     backdrop-filter: blur(var(--fg-glass-blur));
-    border: 1px solid hsla(255, 255, 255, 0.1);
+    border: 1px solid var(--fg-border-glass-light);
     border-radius: var(--fg-radius-lg);
     padding: var(--fg-space-md);
     transition: var(--fg-transition-normal);
@@ -160,13 +220,13 @@ body {
     background: linear-gradient(
       90deg,
       transparent,
-      hsla(255, 255, 255, 0.3),
+      var(--fg-border-glass-medium),
       transparent
     );
   }
 
   .glass-card:hover {
-    border-color: hsla(255, 255, 255, 0.2);
+    border-color: var(--fg-border-glass-medium);
     transform: translateY(-4px);
     box-shadow: var(--fg-shadow-lg);
   }
@@ -463,7 +523,33 @@ body {
 
   .tooltip-fluid.show {
     opacity: 1;
-    transform: translateY(-5px);
+    transform: translateY(0);
+  }
+
+  /* Styles pour les composants Dropdown */
+  .dropdown-menu {
+    z-index: 50 !important;
+    position: absolute;
+    min-width: 200px;
+    max-width: 300px;
+  }
+
+  .dropdown-menu-portal {
+    z-index: 9999 !important;
+    position: fixed;
+    min-width: 200px;
+    max-width: 300px;
+  }
+
+  /* Portal container pour les dropdowns */
+  #dropdown-portal {
+    position: relative;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  #dropdown-portal > * {
+    pointer-events: auto;
   }
 
   .progress-fluid {

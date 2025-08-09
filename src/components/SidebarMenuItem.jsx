@@ -41,7 +41,11 @@ export default function SidebarMenuItem({
       >
 
         <div className="flex items-center gap-2">
-          {Icon && <Icon size={16} />}
+          {Icon && (
+            <div className="flex h-6 w-6 items-center justify-center">
+              <Icon size={16} />
+            </div>
+          )}
           {isCollapsed ? '' : itemLabel}
         </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-export default function Textarea({ label, name, value, onChange, placeholder, maxLength, ...props }) {
+export default function Textarea({ label, name, value, onChange, placeholder, maxLength, className, ...props }) {
   return (
     <div>
       {label && <label htmlFor={name} className="block text-sm font-medium mb-2">{label}</label>}
@@ -10,7 +10,7 @@ export default function Textarea({ label, name, value, onChange, placeholder, ma
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="input-fluid min-h-[120px] resize-y"
+        className={`input-fluid min-h-[120px] resize-y ${className || ''}`}
         maxLength={maxLength}
         {...props}
       />

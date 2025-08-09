@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from 'react';
-import { Menu, X, Search, Bell, ChevronDown } from 'lucide-react';
-import Dropdown from './Dropdown';
-import IconButton from './IconButton';
-import Button from './Button';
-import Avatar from './Avatar';
+import { Bell, ChevronDown, Menu, Search, X } from "lucide-react";
+import { useState } from "react";
+import Avatar from "./Avatar";
+import Button from "./Button";
+import Dropdown from "./Dropdown";
+import IconButton from "./IconButton";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 export default function TopNavigation({
   logo,
@@ -18,10 +19,12 @@ export default function TopNavigation({
   onNavItemClick,
   showSearch = true,
   showNotifications = true,
+  showThemeSwitcher = true,
+  showThemeSwitcherLabel = false,
 }) {
-  const [activeTab, setActiveTab] = useState('');
+  const [activeTab, setActiveTab] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Définir l'onglet actif initial si des éléments de navigation sont fournis
   useState(() => {
@@ -55,7 +58,11 @@ export default function TopNavigation({
             {navItems.map((item) => (
               <button
                 key={item.id}
-                className={`flex items-center gap-2 text-sm font-medium ${activeTab === item.id ? 'text-accent-600' : 'text-gray-600 hover:text-gray-800'}`}
+                className={`flex items-center gap-2 text-sm font-medium ${
+                  activeTab === item.id
+                    ? "text-accent-600"
+                    : "text-gray-600 hover:text-gray-800"
+                }`}
                 onClick={() => handleNavItemClick(item)}
               >
                 {item.icon && <item.icon size={16} />}
@@ -84,9 +91,13 @@ export default function TopNavigation({
               </div>
             )}
 
+            {showThemeSwitcher && (
+              <ThemeSwitcher showLabel={showThemeSwitcherLabel} />
+            )}
+
             {showNotifications && (
               <IconButton
-                icon={<Bell size={20} />}
+                icon={<Bell size={16} />}
                 aria-label="Notifications"
                 variant="ghost"
                 badge={notificationCount > 0 ? notificationCount : undefined}
@@ -103,12 +114,12 @@ export default function TopNavigation({
                     endIcon={<ChevronDown size={16} />}
                   >
                     {userAvatar ? (
-                      typeof userAvatar === 'string' ? (
+                      typeof userAvatar === "string" ? (
                         <Avatar
                           src={userAvatar}
-                          alt={userName || 'User'}
+                          alt={userName || "User"}
                           size="sm"
-                          fallback={(userName || 'U').charAt(0)}
+                          fallback={(userName || "U").charAt(0)}
                         />
                       ) : (
                         userAvatar
@@ -116,10 +127,12 @@ export default function TopNavigation({
                     ) : (
                       <Avatar
                         size="sm"
-                        fallback={(userName || 'U').charAt(0)}
+                        fallback={(userName || "U").charAt(0)}
                       />
                     )}
-                    {userName && <span className="font-medium">{userName}</span>}
+                    {userName && (
+                      <span className="font-medium">{userName}</span>
+                    )}
                   </Button>
                 </Dropdown.Trigger>
                 <Dropdown.Menu>
@@ -130,7 +143,9 @@ export default function TopNavigation({
                       <Dropdown.Item
                         key={`${item.label}-${index}`}
                         onClick={item.onClick}
-                        className={item.isDanger ? 'text-red-600 hover:text-red-700' : ''}
+                        className={
+                          item.isDanger ? "text-red-600 hover:text-red-700" : ""
+                        }
                       >
                         {item.icon}
                         {item.label}
@@ -160,7 +175,9 @@ export default function TopNavigation({
             {navItems.map((item) => (
               <button
                 key={item.id}
-                className={`flex items-center gap-2 text-sm font-medium ${activeTab === item.id ? 'text-accent-600' : 'text-gray-600'}`}
+                className={`flex items-center gap-2 text-sm font-medium ${
+                  activeTab === item.id ? "text-accent-600" : "text-gray-600"
+                }`}
                 onClick={() => {
                   handleNavItemClick(item);
                   setMobileMenuOpen(false);
@@ -170,7 +187,7 @@ export default function TopNavigation({
                 {item.label}
               </button>
             ))}
-            
+
             <div className="pt-4 border-t">
               {showSearch && (
                 <div className="relative mb-4">
@@ -187,11 +204,17 @@ export default function TopNavigation({
                   />
                 </div>
               )}
-              
+
+              {showThemeSwitcher && (
+                <div className="mb-4">
+                  <ThemeSwitcher showLabel={true} />
+                </div>
+              )}
+
               {userName && (
                 <div className="flex items-center gap-3 mb-2">
                   {userAvatar ? (
-                    typeof userAvatar === 'string' ? (
+                    typeof userAvatar === "string" ? (
                       <Avatar
                         src={userAvatar}
                         alt={userName}
@@ -202,22 +225,21 @@ export default function TopNavigation({
                       userAvatar
                     )
                   ) : (
-                    <Avatar
-                      size="sm"
-                      fallback={userName.charAt(0)}
-                    />
+                    <Avatar size="sm" fallback={userName.charAt(0)} />
                   )}
                   <span className="font-medium">{userName}</span>
                 </div>
               )}
-              
+
               {userDropdownItems
                 .filter((item) => !item.isSeparator)
                 .map((item, index) => (
                   <button
                     key={`${item.label}-${index}`}
                     onClick={item.onClick}
-                    className={`flex items-center gap-2 text-sm font-medium py-2 w-full ${item.isDanger ? 'text-red-600' : 'text-gray-600'}`}
+                    className={`flex items-center gap-2 text-sm font-medium py-2 w-full ${
+                      item.isDanger ? "text-red-600" : "text-gray-600"
+                    }`}
                   >
                     {item.icon}
                     {item.label}

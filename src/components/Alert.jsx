@@ -1,6 +1,6 @@
 "use client";
 
-import { Info, CheckCircle, AlertCircle, XCircle } from "lucide-react";
+import { AlertCircle, CheckCircle, Info, XCircle } from "lucide-react";
 
 const alertConfig = {
   info: {
@@ -38,7 +38,7 @@ const alertConfig = {
 };
 
 export default function Alert({ variant = "info", title, children }) {
-  const config = alertConfig[variant];
+  const config = alertConfig[variant] ?? alertConfig.info;
   const Icon = config.icon;
 
   return (
