@@ -2771,27 +2771,46 @@ Le composant `TopNavigation` est une barre de navigation supérieure responsive 
 
 **Props**
 
-| Prop              | Type                | Défaut | Description                                                      |
-| ----------------- | ------------------- | ------ | ---------------------------------------------------------------- |
-| logo              | ReactNode           | null   | Élément React pour le logo                                       |
-| navItems          | array               | []     | Tableau d'objets `{id, label, icon}` pour la navigation          |
-| userDropdownItems | array               | []     | Tableau d'objets `{label, icon, onClick, isSeparator, isDanger}` |
-| userAvatar        | string ou ReactNode | null   | URL de l'avatar ou élément React                                 |
-| userName          | string              | null   | Nom de l'utilisateur affiché dans le menu                        |
-| notificationCount | number              | 0      | Nombre de notifications (badge)                                  |
-| onSearch          | function            | null   | Fonction appelée lors de la recherche                            |
-| onNavItemClick    | function            | null   | Fonction appelée lors du clic sur un élément de navigation       |
-| showSearch        | boolean             | true   | Afficher ou masquer la barre de recherche                        |
-| showNotifications | boolean             | true   | Afficher ou masquer l'icône de notifications                     |
-| showThemeSwitcher | boolean             | true   | Afficher ou masquer le bouton de changement de thème             |
+| Prop                 | Type                | Défaut | Description                                                      |
+| -------------------- | ------------------- | ------ | ---------------------------------------------------------------- |
+| logo                 | ReactNode           | null   | Élément React pour le logo                                       |
+| navItems             | array               | []     | Tableau d'objets `{id, label, icon}` pour la navigation          |
+| userDropdownItems    | array               | []     | Tableau d'objets `{label, icon, onClick, isSeparator, isDanger}` |
+| userAvatar           | string ou ReactNode | null   | URL de l'avatar ou élément React                                 |
+| userName             | string              | null   | Nom de l'utilisateur affiché dans le menu                        |
+| notificationCount    | number              | 0      | Nombre de notifications (badge)                                  |
+| onSearch             | function            | null   | Fonction appelée lors de la recherche                            |
+| onNavItemClick       | function            | null   | Fonction appelée lors du clic sur un élément de navigation       |
+| onNotificationClick  | function            | null   | Fonction appelée lors du clic sur l'icône de notifications       |
+| customActions        | array               | []     | Tableau d'objets pour boutons d'action personnalisés            |
+| showSearch           | boolean             | true   | Afficher ou masquer la barre de recherche                        |
+| showNotifications    | boolean             | true   | Afficher ou masquer l'icône de notifications                     |
+| showThemeSwitcher    | boolean             | true   | Afficher ou masquer le bouton de changement de thème             |
+| showThemeSwitcherLabel | boolean           | false  | Afficher ou masquer le label du bouton de changement de thème    |
 
 **Fonctionnalités**
 
 - **Navigation responsive** : Adapte l'affichage selon la taille d'écran
 - **Barre de recherche** : Champ de recherche intégré avec callback
-- **Notifications** : Icône avec badge de notification configurable
+- **Notifications** : Icône avec badge de notification configurable et gestionnaire de clic
+- **Actions personnalisées** : Boutons d'action configurables avec badges optionnels
 - **Menu utilisateur** : Avatar avec dropdown personnalisable et actions
 - **Mode mobile** : Menu hamburger pour les petits écrans
+
+**Structure des customActions**
+
+Chaque objet dans le tableau `customActions` peut contenir :
+
+| Propriété     | Type        | Description                                           |
+| ------------- | ----------- | ----------------------------------------------------- |
+| key           | string      | Clé unique pour React (optionnel, utilise l'index)   |
+| icon          | ReactNode   | Icône à afficher dans le bouton                       |
+| label         | string      | Label pour l'accessibilité (aria-label)              |
+| onClick       | function    | Fonction appelée lors du clic                         |
+| variant       | string      | Variante du bouton ("ghost", "outline", etc.)        |
+| className     | string      | Classes CSS supplémentaires                          |
+| badge         | number      | Nombre à afficher dans le badge (optionnel)          |
+| badgeVariant  | string      | Variante du badge ("red", "green", "yellow", etc.)   |
 
 **Exemple d'utilisation**
 
@@ -2831,6 +2850,37 @@ const AppLayout = ({ children }) => {
     console.log("Recherche:", query);
   };
 
+  const handleNotificationClick = () => {
+    console.log("Ouverture des notifications");
+  };
+
+  // Actions personnalisées avec badges
+  const customActions = [
+    {
+      key: "messages",
+      icon: <Mail size={16} />,
+      label: "Messages",
+      onClick: () => console.log("Ouverture des messages"),
+      badge: 5,
+      badgeVariant: "green"
+    },
+    {
+      key: "tasks",
+      icon: <CheckSquare size={16} />,
+      label: "Tâches",
+      onClick: () => console.log("Ouverture des tâches"),
+      badge: 12,
+      badgeVariant: "yellow"
+    },
+    {
+      key: "help",
+      icon: <HelpCircle size={16} />,
+      label: "Aide",
+      onClick: () => console.log("Ouverture de l'aide"),
+      variant: "outline"
+    }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
       <TopNavigation
@@ -2842,6 +2892,8 @@ const AppLayout = ({ children }) => {
         notificationCount={3}
         onSearch={handleSearch}
         onNavItemClick={(item) => console.log("Navigation vers", item.label)}
+        onNotificationClick={handleNotificationClick}
+        customActions={customActions}
       />
       <main className="flex-1">{children}</main>
     </div>

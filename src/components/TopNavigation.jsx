@@ -3,6 +3,7 @@
 import { Bell, ChevronDown, Menu, Search, X } from "lucide-react";
 import { useState } from "react";
 import Avatar from "./Avatar";
+import Badge from "./Badge";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
 import IconButton from "./IconButton";
@@ -17,6 +18,8 @@ export default function TopNavigation({
   notificationCount = 0,
   onSearch,
   onNavItemClick,
+  onNotificationClick,
+  customActions = [],
   showSearch = true,
   showNotifications = true,
   showThemeSwitcher = true,
@@ -75,6 +78,27 @@ export default function TopNavigation({
         <div className="flex items-center gap-2">
           {/* Boutons d'action */}
           <div className="hidden md:flex items-center gap-2">
+            {/* Boutons d'action personnalisés */}
+            {customActions.map((action, index) => (
+              <div key={action.key || index} className="relative">
+                <IconButton
+                  icon={action.icon}
+                  aria-label={action.label}
+                  variant={action.variant || "ghost"}
+                  onClick={action.onClick}
+                  className={action.className}
+                />
+                {action.badge && (
+                  <Badge
+                    variant={action.badgeVariant || "red"}
+                    className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center text-[10px] px-1 py-0"
+                  >
+                    {action.badge > 99 ? "99+" : action.badge}
+                  </Badge>
+                )}
+              </div>
+            ))}
+
             {showSearch && (
               <div className="relative">
                 <input
@@ -96,12 +120,22 @@ export default function TopNavigation({
             )}
 
             {showNotifications && (
-              <IconButton
-                icon={<Bell size={16} />}
-                aria-label="Notifications"
-                variant="ghost"
-                badge={notificationCount > 0 ? notificationCount : undefined}
-              />
+              <div className="relative">
+                <IconButton
+                  icon={<Bell size={16} />}
+                  aria-label="Notifications"
+                  variant="ghost"
+                  onClick={onNotificationClick}
+                />
+                {notificationCount > 0 && (
+                  <Badge
+                    variant="red"
+                    className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center text-[10px] px-1 py-0"
+                  >
+                    {notificationCount > 99 ? "99+" : notificationCount}
+                  </Badge>
+                )}
+              </div>
             )}
 
             {/* Menu utilisateur */}

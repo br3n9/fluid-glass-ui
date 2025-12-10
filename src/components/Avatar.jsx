@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Image from 'next/image';
+// Removed next/image import as it's specific to Next.js
 import { User } from "lucide-react";
 
 const sizeConfig = {
@@ -42,7 +42,15 @@ export default function Avatar({
   return (
     <div className={finalClassName}>
       {src ? (
-        <Image src={src} alt="avatar" layout="fill" className="rounded-full object-cover" />
+        <img 
+          src={src} 
+          alt="avatar" 
+          className="w-full h-full rounded-full object-cover"
+          onError={(e) => {
+            // Fallback si l'image ne se charge pas
+            e.target.style.display = 'none';
+          }}
+        />
       ) : (
         React.cloneElement(icon, {
           size: config.iconSize,
