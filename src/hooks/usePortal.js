@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 /**
  * Hook pour créer un portail DOM
  * Permet de rendre des composants en dehors de leur hiérarchie normale
  */
-export function usePortal(id = 'portal-root') {
+export function usePortal(id = "portal-root") {
   const [portalElement, setPortalElement] = useState(null);
 
   useEffect(() => {
@@ -15,12 +15,18 @@ export function usePortal(id = 'portal-root') {
 
     if (!element) {
       created = true;
-      element = document.createElement('div');
+      element = document.createElement("div");
       element.id = id;
-      element.style.position = 'relative';
-      element.style.zIndex = '9999';
       document.body.appendChild(element);
     }
+
+    // Ensure styles are always correct, even if element existed
+    element.style.position = "absolute";
+    element.style.top = "0";
+    element.style.left = "0";
+    element.style.width = "100%";
+    element.style.zIndex = "9999";
+    element.style.pointerEvents = "none"; // Avoid blocking clicks
 
     setPortalElement(element);
 
@@ -38,11 +44,11 @@ export function usePortal(id = 'portal-root') {
 /**
  * Composant Portal pour rendre du contenu dans un portail
  */
-export function Portal({ children, id = 'portal-root' }) {
+export function Portal({ children, id = "portal-root" }) {
   const portalElement = usePortal(id);
-  
+
   if (!portalElement) return null;
-  
+
   return createPortal(children, portalElement);
 }
 

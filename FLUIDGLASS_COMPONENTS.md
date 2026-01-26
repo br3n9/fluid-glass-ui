@@ -800,17 +800,20 @@ Le composant `StatCard` est utilisé pour afficher une statistique clé, comme u
 
 **Props**
 
-| Prop     | Type                      | Défaut     | Description                                                       |
-| :------- | :------------------------ | :--------- | :---------------------------------------------------------------- |
-| `title`  | `string`                  | **Requis** | Le titre de la statistique.                                       |
-| `value`  | `string` ou `number`      | **Requis** | La valeur principale de la statistique.                           |
-| `change` | `string`                  | **Requis** | La description de la variation (ex: "+5.2%").                     |
-| `trend`  | `string` ('up' ou 'down') | **Requis** | La direction de la tendance, qui détermine l'icône et la couleur. |
+| Prop      | Type                      | Défaut     | Description                                                       |
+| :-------- | :------------------------ | :--------- | :---------------------------------------------------------------- |
+| `title`   | `string`                  | **Requis** | Le titre de la statistique.                                       |
+| `value`   | `string` ou `number`      | **Requis** | La valeur principale de la statistique.                           |
+| `change`  | `string`                  | **Requis** | La description de la variation (ex: "+5.2%").                     |
+| `trend`   | `string` ('up' ou 'down') | **Requis** | La direction de la tendance, qui détermine l'icône et la couleur. |
+| `icon`    | `React.ComponentType`     | Optionnel  | Icône représentant la statistique affichée.                       |
+| `variant` | `string`                  | 'default'  | Variante de couleur ('default', 'warning', 'error', 'success').   |
 
 **Exemple d'utilisation**
 
 ```jsx
 import StatCard from "fluid-glass-ui";
+import { DollarSign } from "lucide-react";
 
 const RevenueCard = () => (
   <StatCard
@@ -818,6 +821,8 @@ const RevenueCard = () => (
     value="12,500 €"
     change="+1,200 €"
     trend="up"
+    icon={DollarSign}
+    variant="success"
   />
 );
 ```
@@ -1198,9 +1203,7 @@ const SimpleModalExample = () => {
           <Button variant="outline" onClick={() => setIsModalOpen(false)}>
             Annuler
           </Button>
-          <Button onClick={() => setIsModalOpen(false)}>
-            Confirmer
-          </Button>
+          <Button onClick={() => setIsModalOpen(false)}>Confirmer</Button>
         </div>
       </Modal>
     </>
@@ -1216,55 +1219,55 @@ Pour plus de flexibilité, vous pouvez utiliser les sous-composants `ModalHeader
 
 **Props**
 
-| Prop              | Type        | Défaut     | Description                                                        |
-| :---------------- | :---------- | :--------- | :----------------------------------------------------------------- |
-| `title`           | `string`    | `null`     | Le titre à afficher dans l'en-tête.                                |
-| `onClose`         | `function`  | `null`     | Fonction de fermeture (affiche le bouton X si fournie).            |
-| `showCloseButton` | `boolean`   | `true`     | Affiche ou masque le bouton de fermeture.                          |
-| `children`        | `ReactNode` | `null`     | Contenu personnalisé supplémentaire dans l'en-tête.                |
-| `variant`         | `string`    | `'default'`| Variante de style : `'default'`, `'compact'`, `'spacious'`.        |
-| `className`       | `string`    | `''`       | Classes CSS supplémentaires.                                       |
+| Prop              | Type        | Défaut      | Description                                                 |
+| :---------------- | :---------- | :---------- | :---------------------------------------------------------- |
+| `title`           | `string`    | `null`      | Le titre à afficher dans l'en-tête.                         |
+| `onClose`         | `function`  | `null`      | Fonction de fermeture (affiche le bouton X si fournie).     |
+| `showCloseButton` | `boolean`   | `true`      | Affiche ou masque le bouton de fermeture.                   |
+| `children`        | `ReactNode` | `null`      | Contenu personnalisé supplémentaire dans l'en-tête.         |
+| `variant`         | `string`    | `'default'` | Variante de style : `'default'`, `'compact'`, `'spacious'`. |
+| `className`       | `string`    | `''`        | Classes CSS supplémentaires.                                |
 
 ##### ModalBody
 
 **Props**
 
-| Prop         | Type        | Défaut     | Description                                                        |
-| :----------- | :---------- | :--------- | :----------------------------------------------------------------- |
-| `children`   | `ReactNode` | `null`     | Le contenu principal de la modale.                                 |
-| `scrollable` | `boolean`   | `true`     | Active le défilement automatique si le contenu dépasse la hauteur. |
-| `variant`    | `string`    | `'default'`| Variante de style : `'default'`, `'compact'`, `'spacious'`.        |
-| `className`  | `string`    | `''`       | Classes CSS supplémentaires.                                       |
+| Prop         | Type        | Défaut      | Description                                                        |
+| :----------- | :---------- | :---------- | :----------------------------------------------------------------- |
+| `children`   | `ReactNode` | `null`      | Le contenu principal de la modale.                                 |
+| `scrollable` | `boolean`   | `true`      | Active le défilement automatique si le contenu dépasse la hauteur. |
+| `variant`    | `string`    | `'default'` | Variante de style : `'default'`, `'compact'`, `'spacious'`.        |
+| `className`  | `string`    | `''`        | Classes CSS supplémentaires.                                       |
 
 ##### ModalFooter
 
 **Props**
 
-| Prop        | Type        | Défaut     | Description                                                        |
-| :---------- | :---------- | :--------- | :----------------------------------------------------------------- |
-| `children`  | `ReactNode` | `null`     | Les boutons ou actions à afficher dans le pied de page.           |
-| `variant`   | `string`    | `'default'`| Variante de style : `'default'`, `'compact'`, `'spacious'`.        |
-| `className` | `string`    | `''`       | Classes CSS supplémentaires.                                       |
+| Prop        | Type        | Défaut      | Description                                                 |
+| :---------- | :---------- | :---------- | :---------------------------------------------------------- |
+| `children`  | `ReactNode` | `null`      | Les boutons ou actions à afficher dans le pied de page.     |
+| `variant`   | `string`    | `'default'` | Variante de style : `'default'`, `'compact'`, `'spacious'`. |
+| `className` | `string`    | `''`        | Classes CSS supplémentaires.                                |
 
 **Exemple d'utilisation modulaire**
 
 ```jsx
-import { 
-  Modal, 
-  ModalHeader, 
-  ModalBody, 
-  ModalFooter, 
-  Button, 
-  Input 
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Input,
 } from "fluid-glass-ui";
 import { useState } from "react";
 
 const ModularModalExample = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '' });
+  const [formData, setFormData] = useState({ name: "", email: "" });
 
   const handleSubmit = () => {
-    console.log('Form submitted:', formData);
+    console.log("Form submitted:", formData);
     setIsModalOpen(false);
   };
 
@@ -1276,39 +1279,38 @@ const ModularModalExample = () => {
         onClose={() => setIsModalOpen(false)}
         size="md"
       >
-        <ModalHeader 
+        <ModalHeader
           title="Informations utilisateur"
           onClose={() => setIsModalOpen(false)}
         />
-        
+
         <ModalBody>
           <div className="space-y-4">
             <Input
               label="Nom complet"
               value={formData.name}
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
               placeholder="Entrez votre nom"
             />
             <Input
               label="Email"
               type="email"
               value={formData.email}
-              onChange={(e) => setFormData({...formData, email: e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               placeholder="Entrez votre email"
             />
           </div>
         </ModalBody>
-        
+
         <ModalFooter>
-          <Button 
-            variant="outline" 
-            onClick={() => setIsModalOpen(false)}
-          >
+          <Button variant="outline" onClick={() => setIsModalOpen(false)}>
             Annuler
           </Button>
-          <Button onClick={handleSubmit}>
-            Enregistrer
-          </Button>
+          <Button onClick={handleSubmit}>Enregistrer</Button>
         </ModalFooter>
       </Modal>
     </>
@@ -1855,19 +1857,19 @@ Le composant `FileUploader` permet de télécharger des fichiers et de les affic
 
 **Props**
 
-| Prop        | Type     | Défaut      | Description                                                                                                                 |
-| :---------- | :------- | :---------- | :-------------------------------------------------------------------------------------------------------------------------- |
-| `multiple`  | `boolean` | `false`     | Permet de télécharger plusieurs fichiers.                                                                                   |
-| `maxFiles`  | `number`  | `undefined` | Limite le nombre de fichiers à télécharger.                                                                                  |
-| `maxSize`   | `number`  | `undefined` | Limite la taille des fichiers à télécharger (en octets).                                                                      |
-| `accept`    | `string`  | `undefined` | Spécifie les types de fichiers acceptés (ex: "image/*,application/pdf").                                                    |
-| `onUpload`  | `function` | `undefined` | Fonction appelée lors du téléchargement des fichiers.                                                                        |
-| `onDelete`  | `function` | `undefined` | Fonction appelée lors de la suppression d'un fichier.                                                                        |
-| `onError`   | `function` | `undefined` | Fonction appelée en cas d'erreur lors du téléchargement des fichiers.                                                        |
-| `label`     | `string`   | `"Ajouter des fichiers"` | Texte affiché pour le bouton de téléchargement.                                                                               |
-| `buttonProps` | `object` | `undefined` | Props supplémentaires pour le bouton de téléchargement.                                                                     |
-| `fileProps` | `object` | `undefined` | Props supplémentaires pour les fichiers affichés.                                                                            |
-| `className` | `string` | `undefined` | Classe CSS supplémentaire pour le composant.                                                                                 |
+| Prop          | Type       | Défaut                   | Description                                                               |
+| :------------ | :--------- | :----------------------- | :------------------------------------------------------------------------ |
+| `multiple`    | `boolean`  | `false`                  | Permet de télécharger plusieurs fichiers.                                 |
+| `maxFiles`    | `number`   | `undefined`              | Limite le nombre de fichiers à télécharger.                               |
+| `maxSize`     | `number`   | `undefined`              | Limite la taille des fichiers à télécharger (en octets).                  |
+| `accept`      | `string`   | `undefined`              | Spécifie les types de fichiers acceptés (ex: "image/\*,application/pdf"). |
+| `onUpload`    | `function` | `undefined`              | Fonction appelée lors du téléchargement des fichiers.                     |
+| `onDelete`    | `function` | `undefined`              | Fonction appelée lors de la suppression d'un fichier.                     |
+| `onError`     | `function` | `undefined`              | Fonction appelée en cas d'erreur lors du téléchargement des fichiers.     |
+| `label`       | `string`   | `"Ajouter des fichiers"` | Texte affiché pour le bouton de téléchargement.                           |
+| `buttonProps` | `object`   | `undefined`              | Props supplémentaires pour le bouton de téléchargement.                   |
+| `fileProps`   | `object`   | `undefined`              | Props supplémentaires pour les fichiers affichés.                         |
+| `className`   | `string`   | `undefined`              | Classe CSS supplémentaire pour le composant.                              |
 
 **Exemple d'utilisation**
 
@@ -2019,12 +2021,12 @@ Le composant `DataCard` est un composant générique utilisé pour afficher des 
 
 **Props**
 
-| Prop        | Type                      | Défaut     | Description                                                    |
-| :---------- | :------------------------ | :--------- | :------------------------------------------------------------- |
-| `label`     | `string`                  | **Requis** | Le label/titre à afficher à gauche.                           |
-| `value`     | `string \| ReactNode`     | **Requis** | La valeur à afficher à droite (texte ou élément React).       |
-| `icon`      | `ReactNode`               | `null`     | Icône optionnelle à afficher à côté du label.                 |
-| `className` | `string`                  | `""`       | Classes CSS additionnelles pour personnaliser le style.       |
+| Prop        | Type                  | Défaut     | Description                                             |
+| :---------- | :-------------------- | :--------- | :------------------------------------------------------ |
+| `label`     | `string`              | **Requis** | Le label/titre à afficher à gauche.                     |
+| `value`     | `string \| ReactNode` | **Requis** | La valeur à afficher à droite (texte ou élément React). |
+| `icon`      | `ReactNode`           | `null`     | Icône optionnelle à afficher à côté du label.           |
+| `className` | `string`              | `""`       | Classes CSS additionnelles pour personnaliser le style. |
 
 **Exemple d'utilisation**
 
@@ -2624,15 +2626,15 @@ Le composant `Select` est une liste déroulante avancée qui permet à l'utilisa
 
 **Props avancées**
 
-| Prop                | Type       | Défaut            | Description                                                                           |
-| :------------------ | :--------- | :---------------- | :------------------------------------------------------------------------------------ |
-| `searchable`        | `boolean`  | `false`           | Active la barre de recherche intégrée.                                                |
-| `sortable`          | `boolean`  | `false`           | Active le bouton de tri des options.                                                  |
-| `sortOrder`         | `string`   | `'asc'`           | Ordre de tri initial (`'asc'` ou `'desc'`).                                           |
-| `onSortChange`      | `function` | `null`            | Fonction appelée lors du changement d'ordre de tri. Reçoit le nouvel ordre.           |
+| Prop                | Type       | Défaut            | Description                                                                                                                                          |
+| :------------------ | :--------- | :---------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `searchable`        | `boolean`  | `false`           | Active la barre de recherche intégrée.                                                                                                               |
+| `sortable`          | `boolean`  | `false`           | Active le bouton de tri des options.                                                                                                                 |
+| `sortOrder`         | `string`   | `'asc'`           | Ordre de tri initial (`'asc'` ou `'desc'`).                                                                                                          |
+| `onSortChange`      | `function` | `null`            | Fonction appelée lors du changement d'ordre de tri. Reçoit le nouvel ordre.                                                                          |
 | `loadOptions`       | `function` | `null`            | Fonction pour le chargement dynamique. Signature: `(searchTerm, page) => Promise<options[]> \| null`. Retourne `null` pour arrêter le scroll infini. |
-| `searchPlaceholder` | `string`   | `'Rechercher...'` | Placeholder du champ de recherche.                                                    |
-| `maxHeight`         | `number`   | `240`             | Hauteur maximale de la liste déroulante en pixels.                                    |
+| `searchPlaceholder` | `string`   | `'Rechercher...'` | Placeholder du champ de recherche.                                                                                                                   |
+| `maxHeight`         | `number`   | `240`             | Hauteur maximale de la liste déroulante en pixels.                                                                                                   |
 
 **Exemple d'utilisation de base**
 
@@ -2711,21 +2713,21 @@ const DynamicSelect = () => {
   const loadContacts = useCallback(async (searchTerm, page) => {
     try {
       const response = await fetch(
-        `/api/contacts?search=${encodeURIComponent(searchTerm)}&page=${page}&limit=20`
+        `/api/contacts?search=${encodeURIComponent(searchTerm)}&page=${page}&limit=20`,
       );
       const data = await response.json();
-      
+
       if (data.success && data.data.length > 0) {
-        return data.data.map(contact => ({
+        return data.data.map((contact) => ({
           value: contact.id,
-          label: contact.full_name
+          label: contact.full_name,
         }));
       }
-      
+
       // Retourner null indique la fin du scroll infini
       return null;
     } catch (error) {
-      console.error('Erreur de chargement:', error);
+      console.error("Erreur de chargement:", error);
       return null;
     }
   }, []);
@@ -2763,7 +2765,8 @@ const DynamicSelect = () => {
 - La fonction `loadOptions` doit retourner `null` pour indiquer la fin du scroll infini
 - Le composant gère automatiquement la pagination en incrémentant le paramètre `page`
 - La recherche et le chargement sont unifiés dans une seule fonction pour simplifier l'usage
-```
+
+````
 
 ### TopNavigation
 
@@ -2899,7 +2902,7 @@ const AppLayout = ({ children }) => {
     </div>
   );
 };
-```
+````
 
 ### Label
 
@@ -2975,10 +2978,10 @@ import { createPortal } from "react-dom";
 import { useState } from "react";
 
 const CustomModal = ({ isOpen, onClose, children }) => {
-  const portalElement = usePortal('custom-modal-portal');
-  
+  const portalElement = usePortal("custom-modal-portal");
+
   if (!isOpen || !portalElement) return null;
-  
+
   return createPortal(
     <div className="fixed inset-0 z-[9999] flex items-center justify-center">
       <div className="fixed inset-0 bg-black/50" onClick={onClose} />
@@ -2986,7 +2989,7 @@ const CustomModal = ({ isOpen, onClose, children }) => {
         {children}
       </div>
     </div>,
-    portalElement
+    portalElement,
   );
 };
 ```
@@ -2997,10 +3000,10 @@ Le composant `Portal` est une version simplifiée qui utilise `usePortal` en int
 
 **Props**
 
-| Prop     | Type      | Défaut        | Description                    |
-| -------- | --------- | ------------- | ------------------------------ |
+| Prop     | Type      | Défaut        | Description                      |
+| -------- | --------- | ------------- | -------------------------------- |
 | children | ReactNode | -             | Contenu à rendre dans le portail |
-| id       | string    | 'portal-root' | ID unique de l'élément portail |
+| id       | string    | 'portal-root' | ID unique de l'élément portail   |
 
 **Exemple d'utilisation avec Portal**
 
@@ -3010,22 +3013,18 @@ import { useState } from "react";
 
 const OverlayExample = () => {
   const [showOverlay, setShowOverlay] = useState(false);
-  
+
   return (
     <>
-      <Button onClick={() => setShowOverlay(true)}>
-        Afficher l'overlay
-      </Button>
-      
+      <Button onClick={() => setShowOverlay(true)}>Afficher l'overlay</Button>
+
       {showOverlay && (
         <Portal id="overlay-portal">
           <div className="fixed inset-0 z-[9999] bg-black/50 flex items-center justify-center">
             <div className="bg-white p-6 rounded-lg">
               <h2>Contenu dans le portail</h2>
               <p>Ce contenu est rendu en dehors de la hiérarchie normale.</p>
-              <Button onClick={() => setShowOverlay(false)}>
-                Fermer
-              </Button>
+              <Button onClick={() => setShowOverlay(false)}>Fermer</Button>
             </div>
           </div>
         </Portal>
@@ -3069,20 +3068,20 @@ Fluid Glass UI utilise un système complet de variables CSS pour permettre une p
 
 ```css
 /* Teintes principales */
---fg-primary-hue: 220;           /* Teinte principale (0-360) */
---fg-accent-hue: 280;            /* Teinte d'accent (0-360) */
---fg-neutral-hue: 210;           /* Teinte neutre (0-360) */
---fg-success-hue: 120;           /* Teinte de succès */
---fg-warning-hue: 40;            /* Teinte d'avertissement */
---fg-error-hue: 0;               /* Teinte d'erreur */
+--fg-primary-hue: 220; /* Teinte principale (0-360) */
+--fg-accent-hue: 280; /* Teinte d'accent (0-360) */
+--fg-neutral-hue: 210; /* Teinte neutre (0-360) */
+--fg-success-hue: 120; /* Teinte de succès */
+--fg-warning-hue: 40; /* Teinte d'avertissement */
+--fg-error-hue: 0; /* Teinte d'erreur */
 
 /* Saturations */
---fg-primary-saturation: 15%;    /* Saturation principale */
---fg-accent-saturation: 70%;     /* Saturation d'accent */
+--fg-primary-saturation: 15%; /* Saturation principale */
+--fg-accent-saturation: 70%; /* Saturation d'accent */
 
 /* Effet verre */
---fg-glass-opacity: 0.7;         /* Opacité de l'effet verre */
---fg-glass-blur: 20px;           /* Flou de l'effet verre */
+--fg-glass-opacity: 0.7; /* Opacité de l'effet verre */
+--fg-glass-blur: 20px; /* Flou de l'effet verre */
 ```
 
 #### Variables de Couleurs Calculées
@@ -3097,7 +3096,11 @@ Fluid Glass UI utilise un système complet de variables CSS pour permettre une p
 --fg-text-secondary: hsl(var(--fg-neutral-hue), 10%, 50%);
 
 /* Accent */
---fg-accent-primary: hsl(var(--fg-accent-hue), var(--fg-accent-saturation), 60%);
+--fg-accent-primary: hsl(
+  var(--fg-accent-hue),
+  var(--fg-accent-saturation),
+  60%
+);
 ```
 
 #### Nouvelles Variables pour Bordures Adaptatives
@@ -3122,9 +3125,24 @@ Fluid Glass UI utilise un système complet de variables CSS pour permettre une p
 
 ```css
 /* États hover, active, focus */
---fg-interactive-hover: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 90%, 0.1);
---fg-interactive-active: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 85%, 0.2);
---fg-interactive-focus: hsla(var(--fg-accent-hue), var(--fg-accent-saturation), 60%, 0.3);
+--fg-interactive-hover: hsla(
+  var(--fg-primary-hue),
+  var(--fg-primary-saturation),
+  90%,
+  0.1
+);
+--fg-interactive-active: hsla(
+  var(--fg-primary-hue),
+  var(--fg-primary-saturation),
+  85%,
+  0.2
+);
+--fg-interactive-focus: hsla(
+  var(--fg-accent-hue),
+  var(--fg-accent-saturation),
+  60%,
+  0.3
+);
 ```
 
 #### Nouvelles Variables pour Icônes Adaptatives
@@ -3145,16 +3163,21 @@ Toutes les variables s'adaptent automatiquement en mode sombre :
   /* Arrière-plans sombres */
   --fg-bg-primary: hsl(var(--fg-primary-hue), var(--fg-primary-saturation), 8%);
   --fg-text-primary: hsl(var(--fg-neutral-hue), 15%, 90%);
-  
+
   /* Bordures adaptées au mode sombre */
   --fg-border-glass-light: hsla(var(--fg-neutral-hue), 15%, 100%, 0.1);
   --fg-border-glass-medium: hsla(var(--fg-neutral-hue), 15%, 100%, 0.15);
-  
+
   /* Overlays adaptés au mode sombre */
   --fg-overlay-medium: hsla(var(--fg-neutral-hue), 20%, 0%, 0.6);
-  
+
   /* États interactifs pour mode sombre */
-  --fg-interactive-hover: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 15%, 0.3);
+  --fg-interactive-hover: hsla(
+    var(--fg-primary-hue),
+    var(--fg-primary-saturation),
+    15%,
+    0.3
+  );
 }
 ```
 
@@ -3165,9 +3188,9 @@ Toutes les variables s'adaptent automatiquement en mode sombre :
 ```css
 /* Thème personnalisé */
 :root {
-  --fg-primary-hue: 240;      /* Bleu-violet */
-  --fg-accent-hue: 160;       /* Turquoise */
-  --fg-glass-opacity: 0.5;    /* Moins transparent */
+  --fg-primary-hue: 240; /* Bleu-violet */
+  --fg-accent-hue: 160; /* Turquoise */
+  --fg-glass-opacity: 0.5; /* Moins transparent */
 }
 ```
 
@@ -3175,23 +3198,45 @@ Toutes les variables s'adaptent automatiquement en mode sombre :
 
 ```css
 /* Bordures adaptatives */
-.border-glass-light { border-color: var(--fg-border-glass-light); }
-.border-glass-medium { border-color: var(--fg-border-glass-medium); }
-.border-glass-strong { border-color: var(--fg-border-glass-strong); }
+.border-glass-light {
+  border-color: var(--fg-border-glass-light);
+}
+.border-glass-medium {
+  border-color: var(--fg-border-glass-medium);
+}
+.border-glass-strong {
+  border-color: var(--fg-border-glass-strong);
+}
 
 /* Overlays adaptatifs */
-.overlay-light { background: var(--fg-overlay-light); }
-.overlay-medium { background: var(--fg-overlay-medium); }
-.overlay-strong { background: var(--fg-overlay-strong); }
+.overlay-light {
+  background: var(--fg-overlay-light);
+}
+.overlay-medium {
+  background: var(--fg-overlay-medium);
+}
+.overlay-strong {
+  background: var(--fg-overlay-strong);
+}
 
 /* États interactifs */
-.interactive-hover:hover { background: var(--fg-interactive-hover); }
-.interactive-focus:focus { outline: 2px solid var(--fg-interactive-focus); }
+.interactive-hover:hover {
+  background: var(--fg-interactive-hover);
+}
+.interactive-focus:focus {
+  outline: 2px solid var(--fg-interactive-focus);
+}
 
 /* Icônes adaptatives */
-.icon-primary { color: var(--fg-icon-primary); }
-.icon-secondary { color: var(--fg-icon-secondary); }
-.icon-disabled { color: var(--fg-icon-disabled); }
+.icon-primary {
+  color: var(--fg-icon-primary);
+}
+.icon-secondary {
+  color: var(--fg-icon-secondary);
+}
+.icon-disabled {
+  color: var(--fg-icon-disabled);
+}
 ```
 
 ### Avantages du Système

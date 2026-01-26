@@ -1,7 +1,8 @@
 "use client";
 
 import { X } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import IconButton from "./IconButton";
 
 // Constantes extraites pour éviter la recréation à chaque render
@@ -56,14 +57,25 @@ export default function Modal({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  // State for portal mounting (client-side only)
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  if (!isOpen || !mounted) return null;
 
   const modalSizeClass = SIZE_CLASSES[size] || SIZE_CLASSES.md;
 
-  return (
+  const modalContent = (
     <div
-      className="fixed inset-0 flex items-center justify-center z-50 p-4"
-      style={{ background: "var(--fg-overlay-medium)" }}
+      className="fixed inset-0 flex items-center justify-center p-4"
+      style={{
+        background: "var(--fg-overlay-medium)",
+        zIndex: 9999,
+      }}
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -90,4 +102,7 @@ export default function Modal({
       </div>
     </div>
   );
+
+  // Use portal to render modal at document.body level
+  return createPortal(modalContent, document.body);
 }

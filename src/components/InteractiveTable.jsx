@@ -1,10 +1,12 @@
 "use client";
 
-import { ChevronDown, ChevronUp, Search } from "lucide-react";
+import { ChevronDown, ChevronUp, Filter, Search } from "lucide-react";
 import { useMemo, useState } from "react";
+import Button from "./Button";
 import Checkbox from "./Checkbox";
 import IconButton from "./IconButton";
 import Input from "./Input";
+import Modal from "./Modal";
 import Pagination from "./Pagination";
 import Select from "./Select";
 
@@ -28,6 +30,7 @@ export default function InteractiveTable({
   const [currentPage, setCurrentPage] = useState(1);
   const [tableData, setTableData] = useState(data);
   const [filters, setFilters] = useState({});
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   // Update table data when the data prop changes
   useMemo(() => {
@@ -45,7 +48,7 @@ export default function InteractiveTable({
         if (a[field] < b[field]) return newDirection === "asc" ? -1 : 1;
         if (a[field] > b[field]) return newDirection === "asc" ? 1 : -1;
         return 0;
-      })
+      }),
     );
   };
 
@@ -58,7 +61,7 @@ export default function InteractiveTable({
 
     if (onRowSelect) {
       const selectedRows = tableData.filter((item) =>
-        newSelectedItems.includes(item.id)
+        newSelectedItems.includes(item.id),
       );
       onRowSelect(selectedRows);
     }
@@ -73,7 +76,7 @@ export default function InteractiveTable({
 
     if (onRowSelect) {
       const selectedRows = tableData.filter((item) =>
-        newSelectedItems.includes(item.id)
+        newSelectedItems.includes(item.id),
       );
       onRowSelect(selectedRows);
     }
@@ -93,6 +96,13 @@ export default function InteractiveTable({
     }
   };
 
+  const handleResetFilters = () => {
+    setFilters({});
+    if (onFilterChange) {
+      onFilterChange({});
+    }
+  };
+
   // Filter data based on search term and filters
   const filteredData = useMemo(() => {
     let result = tableData;
@@ -105,7 +115,7 @@ export default function InteractiveTable({
 
       result = result.filter((item) => {
         return searchableColumns.some((field) =>
-          String(item[field]).toLowerCase().includes(searchTerm.toLowerCase())
+          String(item[field]).toLowerCase().includes(searchTerm.toLowerCase()),
         );
       });
     }
@@ -136,50 +146,126 @@ export default function InteractiveTable({
     return filteredData.slice(startIndex, startIndex + itemsPerPage);
   }, [filteredData, currentPage, itemsPerPage]);
 
+  const hasFilters = (filterConfig && filterConfig.length > 0) || customFilters;
+
+  // Smart filter display logic:
+  // - Inline: 1-2 simple filterConfig items WITHOUT customFilters
+  // - Modal: 3+ filterConfig items OR customFilters present
+  const inlineFilterCount = filterConfig?.length || 0;
+  const hasCustomFilters = !!customFilters;
+  const useInlineFilters =
+    inlineFilterCount > 0 && inlineFilterCount <= 2 && !hasCustomFilters;
+  const useModalFilters = hasFilters && !useInlineFilters;
+
   return (
     <section className="glass-card">
       {title && <h3 className="text-xl font-semibold mb-6">{title}</h3>}
 
       {/* Contrôles */}
-      <div className="mb-6">
-        <div className="flex flex-col md:flex-row gap-4 mb-4 items-end">
-          {/* Barre de recherche */}
-          <div className="flex-1">
-            <Input
-              type="text"
-              placeholder="Rechercher..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              startIcon={<Search size={20} />}
-            />
-          </div>
-
-          {/* Filtres générés automatiquement */}
-          {filterConfig && filterConfig.length > 0 && (
-            <div className="flex flex-wrap gap-2 items-center">
-              {filterConfig.map((filter) => (
-                <div key={filter.field} className="min-w-[150px]">
-                  <Select
-                    label={filter.label}
-                    options={filter.options}
-                    value={filters[filter.field] || ""}
-                    onChange={(value) =>
-                      handleFilterChange(filter.field, value)
-                    }
-                    placeholder={
-                      filter.placeholder || `Sélectionner ${filter.label}`
-                    }
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Filtres personnalisés */}
-          {customFilters && (
-            <div className="flex items-center">{customFilters}</div>
-          )}
+      <div className="mb-6 flex flex-wrap items-end gap-4">
+        {/* Barre de recherche - Largeur adaptative */}
+        <div
+          className={
+            useInlineFilters
+              ? "flex-1 min-w-[200px] w-full"
+              : "flex-1 min-w-[200px] w-full"
+          }
+        >
+          <Input
+            type="text"
+            placeholder="Rechercher..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            startIcon={<Search size={20} />}
+            className="w-full"
+          />
         </div>
+
+        {/* Filtres inline (1-2 filtres simples sans customFilters) */}
+        {useInlineFilters &&
+          filterConfig.map((filter) => (
+            <div key={filter.field} className="w-48 min-w-[150px]">
+              <Select
+                options={filter.options}
+                value={filters[filter.field] || ""}
+                onChange={(value) => handleFilterChange(filter.field, value)}
+                placeholder={filter.placeholder || filter.label}
+              />
+            </div>
+          ))}
+
+        {/* Bouton Filtres avec Modal (3+ filtres ou customFilters) */}
+        {useModalFilters && (
+          <>
+            <Button
+              variant="outline"
+              startIcon={<Filter size={16} />}
+              className="whitespace-nowrap"
+              onClick={() => setIsFilterModalOpen(true)}
+            >
+              Filtres
+              {Object.keys(filters).filter((k) => filters[k]).length > 0 && (
+                <span className="ml-1.5 px-1.5 py-0.5 text-xs bg-primary-100 text-primary-700 rounded-full">
+                  {Object.keys(filters).filter((k) => filters[k]).length}
+                </span>
+              )}
+            </Button>
+
+            <Modal
+              isOpen={isFilterModalOpen}
+              onClose={() => setIsFilterModalOpen(false)}
+              title="Filtres disponibles"
+              size="lg"
+            >
+              <div className="pt-6 pb-2">
+                <div className="p-1 space-y-6">
+                  {/* Filtres générés automatiquement */}
+                  {filterConfig && filterConfig.length > 0 && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {filterConfig.map((filter) => (
+                        <div key={filter.field}>
+                          <Select
+                            label={filter.label}
+                            options={filter.options}
+                            value={filters[filter.field] || ""}
+                            onChange={(value) =>
+                              handleFilterChange(filter.field, value)
+                            }
+                            placeholder={
+                              filter.placeholder ||
+                              `Sélectionner ${filter.label}`
+                            }
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Séparateur si les deux types de filtres sont présents */}
+                  {filterConfig && filterConfig.length > 0 && customFilters && (
+                    <div className="border-t border-gray-100 my-2" />
+                  )}
+
+                  {/* Filtres personnalisés */}
+                  {customFilters && (
+                    <div className="custom-filters-container">
+                      {customFilters}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-8 flex justify-end gap-3 pt-4 border-t border-gray-100">
+                  <Button variant="ghost" onClick={handleResetFilters}>
+                    Réinitialiser
+                  </Button>
+                  <Button onClick={() => setIsFilterModalOpen(false)}>
+                    Voir les résultats
+                  </Button>
+                </div>
+              </div>
+            </Modal>
+          </>
+        )}
       </div>
 
       {/* Table */}
@@ -193,7 +279,7 @@ export default function InteractiveTable({
                     checked={
                       currentPageData.length > 0 &&
                       currentPageData.every((item) =>
-                        selectedItems.includes(item.id)
+                        selectedItems.includes(item.id),
                       )
                     }
                     onChange={handleSelectAll}
@@ -282,9 +368,8 @@ export default function InteractiveTable({
                             key={index}
                             onClick={() => action.onClick(item)}
                             title={action.label}
-                          >
-                            {action.icon}
-                          </IconButton>
+                            icon={action.icon}
+                          />
                         ))}
                       </div>
                     </td>
