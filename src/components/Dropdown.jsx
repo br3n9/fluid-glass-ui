@@ -10,7 +10,17 @@ function Dropdown({ children, className = "" }) {
   const dropdownRef = useRef(null);
 
   const handleClickOutside = useCallback((event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    // Si le menu est rendu dans un Portal, il est hors de dropdownRef.
+    // On évite donc de fermer le dropdown si le clic est dans le menu du portal.
+    const clickedInsidePortalMenu = !!event.target?.closest?.(
+      ".dropdown-menu-portal",
+    );
+
+    if (
+      !clickedInsidePortalMenu &&
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target)
+    ) {
       setIsOpen(false);
     }
   }, []);
@@ -82,8 +92,8 @@ function DropdownMenu({ children, align = "left", className = "" }) {
     align === "right" || align === "end"
       ? "right-0"
       : align === "center"
-      ? "left-1/2 -translate-x-1/2"
-      : "left-0";
+        ? "left-1/2 -translate-x-1/2"
+        : "left-0";
 
   // Ajuster la position du menu pour éviter qu'il ne déborde de la fenêtre
   useEffect(() => {
@@ -99,30 +109,24 @@ function DropdownMenu({ children, align = "left", className = "" }) {
         const menuRect = menuRef.current.getBoundingClientRect();
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-        const scrollY = window.scrollY;
-        const scrollX = window.scrollX;
-
         // Vérifier si le menu risque d'être coupé par les limites du parent
         const parentContainer = dropdownContainer?.closest(
-          "td, th, .overflow-hidden, .overflow-x-hidden"
+          "td, th, .overflow-hidden, .overflow-x-hidden",
         );
-        // TEMPORAIRE: Désactiver le Portal pour corriger les événements click
-        const shouldUsePortal = false; // parentContainer !== null;
+        const shouldUsePortal = true;
 
         if (shouldUsePortal) {
           // Utiliser le portail pour éviter les contraintes du parent
           setUsePortal(true);
           const newStyle = {
             position: "fixed",
-            top: `${triggerRect.bottom + scrollY + 8}px`,
+            top: `${triggerRect.bottom + 8}px`,
             left:
               align === "right" || align === "end"
-                ? `${triggerRect.right + scrollX - 200}px` // 200px = largeur approximative du menu
+                ? `${triggerRect.right - 200}px` // 200px = largeur approximative du menu
                 : align === "center"
-                ? `${
-                    triggerRect.left + scrollX + triggerRect.width / 2 - 100
-                  }px`
-                : `${triggerRect.left + scrollX}px`,
+                  ? `${triggerRect.left + triggerRect.width / 2 - 100}px`
+                  : `${triggerRect.left}px`,
             zIndex: 9999, // Z-index très élevé pour être au-dessus de tout
             minWidth: "200px",
           };
@@ -141,7 +145,7 @@ function DropdownMenu({ children, align = "left", className = "" }) {
           // Ajuster si le menu déborde en bas
           if (triggerRect.bottom + 200 > windowHeight) {
             // 200px = hauteur approximative
-            newStyle.top = `${triggerRect.top + scrollY - 8}px`;
+            newStyle.top = `${triggerRect.top - 8}px`;
             newStyle.transform = "translateY(-100%)";
           }
 
@@ -214,7 +218,7 @@ function DropdownItem({ children, onClick, className = "", asChild }) {
   const handleClick = (e) => {
     // Toujours fermer le dropdown avec un délai pour permettre aux actions de se terminer
     setTimeout(() => onClose(), 150);
-    
+
     if (onClick) {
       onClick(e);
     }

@@ -1,7 +1,7 @@
 "use client";
 
 import { Check } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function Checkbox({
   label,
@@ -15,21 +15,49 @@ export default function Checkbox({
   const isControlled = checked !== undefined;
   const isChecked = isControlled ? checked : internalChecked;
 
+  const inputRef = React.useRef(null);
+
+  const handleToggle = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const newChecked = !isChecked;
+    if (!isControlled) {
+      setInternalChecked(newChecked);
+    }
+    if (onChange) {
+      // Simulate a native-like event shape
+      const syntheticEvent = {
+        target: { name, checked: newChecked, type: "checkbox" },
+        currentTarget: { name, checked: newChecked, type: "checkbox" },
+        preventDefault: () => {},
+        stopPropagation: () => {},
+      };
+      onChange(syntheticEvent);
+    }
+  };
+
   return (
-    <label className="flex items-center space-x-3 cursor-pointer">
+    <div
+      className="flex items-center space-x-3 cursor-pointer"
+      onClick={handleToggle}
+      role="checkbox"
+      aria-checked={isChecked}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === " " || e.key === "Enter") {
+          handleToggle(e);
+        }
+      }}
+    >
       <input
+        ref={inputRef}
         type="checkbox"
         name={name}
         checked={isChecked}
-        onChange={(e) => {
-          if (!isControlled) {
-            setInternalChecked(e.target.checked);
-          }
-          if (onChange) {
-            onChange(e);
-          }
-        }}
+        onChange={() => {}}
         className="sr-only"
+        tabIndex={-1}
+        aria-hidden="true"
       />
 
       <div
@@ -40,6 +68,6 @@ export default function Checkbox({
         {isChecked && <Check size={12} className="text-white" />}
       </div>
       {label && <span className="text-sm">{label}</span>}
-    </label>
+    </div>
   );
 }

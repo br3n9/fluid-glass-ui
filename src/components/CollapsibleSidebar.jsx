@@ -31,8 +31,8 @@ const CollapsibleSidebar = ({ logo, title, header, navContent, children }) => {
             {logo ||
               (title && (
                 <div
-                  className={`flex flex-col items-center pt-12 pb-4 px-4 ${
-                    isCollapsed ? "pb-6" : "pb-8"
+                  className={`flex flex-col items-center pt-12 pb-3 px-3 ${
+                    isCollapsed ? "pb-5" : "pb-6"
                   }`}
                 >
                   {logo && <div className="flex-shrink-0 mb-3">{logo}</div>}
@@ -45,11 +45,11 @@ const CollapsibleSidebar = ({ logo, title, header, navContent, children }) => {
               ))}
 
             {/* Séparateur subtil */}
-            <div className="mx-4 mb-4 h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent"></div>
+            <div className="mx-3 mb-3 h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent"></div>
           </div>
 
           {/* Contenu de navigation avec défilement */}
-          <div className="flex-grow overflow-y-auto px-4 pb-4">
+          <div className="flex-grow overflow-y-auto overflow-x-hidden px-3 pb-3">
             {typeof navContent === "function"
               ? navContent(isCollapsed)
               : navContent}

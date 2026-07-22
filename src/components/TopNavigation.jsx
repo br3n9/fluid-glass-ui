@@ -19,6 +19,7 @@ export default function TopNavigation({
   onSearch,
   onNavItemClick,
   onNotificationClick,
+  notificationDropdownContent,
   customActions = [],
   showSearch = true,
   showNotifications = true,
@@ -119,24 +120,51 @@ export default function TopNavigation({
               <ThemeSwitcher showLabel={showThemeSwitcherLabel} />
             )}
 
-            {showNotifications && (
-              <div className="relative">
-                <IconButton
-                  icon={<Bell size={16} />}
-                  aria-label="Notifications"
-                  variant="ghost"
-                  onClick={onNotificationClick}
-                />
-                {notificationCount > 0 && (
-                  <Badge
-                    variant="red"
-                    className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center text-[10px] px-1 py-0"
+            {showNotifications &&
+              (notificationDropdownContent ? (
+                <Dropdown>
+                  <Dropdown.Trigger>
+                    <div className="relative cursor-pointer">
+                      <IconButton
+                        icon={<Bell size={16} />}
+                        aria-label="Notifications"
+                        variant="ghost"
+                      />
+                      {notificationCount > 0 && (
+                        <Badge
+                          variant="red"
+                          className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center text-[10px] px-1 py-0 pointer-events-none"
+                        >
+                          {notificationCount > 99 ? "99+" : notificationCount}
+                        </Badge>
+                      )}
+                    </div>
+                  </Dropdown.Trigger>
+                  <Dropdown.Menu
+                    align="right"
+                    className="w-96 max-h-[480px] overflow-hidden p-0"
                   >
-                    {notificationCount > 99 ? "99+" : notificationCount}
-                  </Badge>
-                )}
-              </div>
-            )}
+                    {notificationDropdownContent}
+                  </Dropdown.Menu>
+                </Dropdown>
+              ) : (
+                <div className="relative">
+                  <IconButton
+                    icon={<Bell size={16} />}
+                    aria-label="Notifications"
+                    variant="ghost"
+                    onClick={onNotificationClick}
+                  />
+                  {notificationCount > 0 && (
+                    <Badge
+                      variant="red"
+                      className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center text-[10px] px-1 py-0"
+                    >
+                      {notificationCount > 99 ? "99+" : notificationCount}
+                    </Badge>
+                  )}
+                </div>
+              ))}
 
             {/* Menu utilisateur */}
             {userDropdownItems.length > 0 && (
@@ -147,26 +175,28 @@ export default function TopNavigation({
                     className="flex items-center gap-2"
                     endIcon={<ChevronDown size={16} />}
                   >
-                    {userAvatar ? (
-                      typeof userAvatar === "string" ? (
+                    <span className="flex items-center gap-2">
+                      {userAvatar ? (
+                        typeof userAvatar === "string" ? (
+                          <Avatar
+                            src={userAvatar}
+                            alt={userName || "User"}
+                            size="sm"
+                            fallback={(userName || "U").charAt(0)}
+                          />
+                        ) : (
+                          userAvatar
+                        )
+                      ) : (
                         <Avatar
-                          src={userAvatar}
-                          alt={userName || "User"}
                           size="sm"
                           fallback={(userName || "U").charAt(0)}
                         />
-                      ) : (
-                        userAvatar
-                      )
-                    ) : (
-                      <Avatar
-                        size="sm"
-                        fallback={(userName || "U").charAt(0)}
-                      />
-                    )}
-                    {userName && (
-                      <span className="font-medium">{userName}</span>
-                    )}
+                      )}
+                      {userName && (
+                        <span className="font-medium">{userName}</span>
+                      )}
+                    </span>
                   </Button>
                 </Dropdown.Trigger>
                 <Dropdown.Menu>
@@ -184,7 +214,7 @@ export default function TopNavigation({
                         {item.icon}
                         {item.label}
                       </Dropdown.Item>
-                    )
+                    ),
                   )}
                 </Dropdown.Menu>
               </Dropdown>

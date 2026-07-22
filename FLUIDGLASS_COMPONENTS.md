@@ -818,8 +818,8 @@ import { DollarSign } from "lucide-react";
 const RevenueCard = () => (
   <StatCard
     title="Revenu Mensuel"
-    value="12,500 €"
-    change="+1,200 €"
+    value="12,500 F CFA"
+    change="+1,200 F CFA"
     trend="up"
     icon={DollarSign}
     variant="success"
@@ -1161,7 +1161,7 @@ const NewMessageNotification = () => (
 );
 ```
 
-### Modal
+### c
 
 Le composant `Modal` affiche un contenu dans une fenêtre superposée à la page, idéal pour les formulaires, les confirmations ou les informations détaillées. L'overlay s'adapte automatiquement au thème sombre/clair grâce aux variables CSS.
 
@@ -2038,7 +2038,7 @@ const LotDetails = () => (
   <div className="space-y-3">
     <DataCard
       label="Prix initial"
-      value="250 000 €"
+      value="250 000 F CFA"
       icon={<DollarSign size={16} />}
     />
     <DataCard
@@ -2257,19 +2257,26 @@ Le composant `InteractiveTable` est un tableau de données interactif et riche e
 
 **Props**
 
-| Prop             | Type        | Défaut                | Description                                                                                         |
-| ---------------- | ----------- | --------------------- | --------------------------------------------------------------------------------------------------- |
-| `data`           | `array`     | `[]`                  | Tableau d'objets contenant les données à afficher. Chaque objet doit avoir un champ `id` unique.    |
-| `columns`        | `array`     | _Voir ci-dessous_     | Configuration des colonnes du tableau.                                                              |
-| `actions`        | `array`     | _Voir ci-dessous_     | Actions disponibles pour chaque ligne du tableau.                                                   |
-| `title`          | `string`    | `'Table Interactive'` | Titre du tableau.                                                                                   |
-| `itemsPerPage`   | `number`    | `5`                   | Nombre d'éléments à afficher par page.                                                              |
-| `selectable`     | `boolean`   | `true`                | Si `true`, affiche des cases à cocher pour sélectionner des lignes.                                 |
-| `onRowSelect`    | `function`  | `null`                | Fonction appelée lorsque des lignes sont sélectionnées, avec les lignes sélectionnées en paramètre. |
-| `onRowClick`     | `function`  | `null`                | Fonction appelée lorsqu'une ligne est cliquée, avec la ligne cliquée en paramètre.                  |
-| `filterConfig`   | `array`     | `[]`                  | Configuration des filtres à afficher automatiquement. _Voir structure ci-dessous_.                  |
-| `onFilterChange` | `function`  | `null`                | Fonction appelée lorsque les filtres sont modifiés, avec l'objet des filtres en paramètre.          |
-| `customFilters`  | `ReactNode` | `null`                | Contenu JSX personnalisé pour les filtres additionnels, affiché après les filtres automatiques.     |
+| Prop                   | Type        | Défaut                | Description                                                                                                        |
+| ---------------------- | ----------- | --------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `data`                 | `array`     | `[]`                  | Tableau d'objets contenant les données à afficher. Chaque objet doit avoir un champ `id` unique.                   |
+| `columns`              | `array`     | _Voir ci-dessous_     | Configuration des colonnes du tableau.                                                                             |
+| `actions`              | `array`     | _Voir ci-dessous_     | Actions disponibles pour chaque ligne du tableau.                                                                  |
+| `title`                | `string`    | `'Table Interactive'` | Titre du tableau.                                                                                                  |
+| `itemsPerPage`         | `number`    | `5`                   | Nombre d'éléments à afficher par page.                                                                             |
+| `selectable`           | `boolean`   | `true`                | Si `true`, affiche des cases à cocher pour sélectionner des lignes.                                                |
+| `onRowSelect`          | `function`  | `null`                | Fonction appelée lorsque des lignes sont sélectionnées, avec les lignes sélectionnées en paramètre.                |
+| `onRowClick`           | `function`  | `null`                | Fonction appelée lorsqu'une ligne est cliquée, avec la ligne cliquée en paramètre.                                 |
+| `filterConfig`         | `array`     | `[]`                  | Configuration des filtres à afficher automatiquement. _Voir structure ci-dessous_.                                 |
+| `onFilterChange`       | `function`  | `null`                | Fonction appelée lorsque les filtres sont modifiés, avec l'objet des filtres en paramètre.                         |
+| `customFilters`        | `ReactNode` | `null`                | Contenu JSX personnalisé pour les filtres additionnels, affiché après les filtres automatiques.                    |
+| `externalSearch`       | `boolean`   | `false`               | Si `true`, désactive la recherche côté client. La recherche est gérée par le parent via `onSearchChange`.          |
+| `searchValue`          | `string`    | `''`                  | Valeur contrôlée de la barre de recherche (utilisée avec `externalSearch`).                                        |
+| `onSearchChange`       | `function`  | `null`                | Callback appelé à chaque frappe dans la barre de recherche (utilisé avec `externalSearch`).                        |
+| `externalPagination`   | `boolean`   | `false`               | Si `true`, désactive la pagination côté client. Le composant reçoit la page courante et le total depuis le parent. |
+| `totalItems`           | `number`    | `null`                | Nombre total d'éléments (toutes pages confondues), utilisé avec `externalPagination`.                              |
+| `currentPageExternal`  | `number`    | `1`                   | Page courante contrôlée par le parent (utilisée avec `externalPagination`).                                        |
+| `onPageChangeExternal` | `function`  | `null`                | Callback appelé lors d'un changement de page (utilisé avec `externalPagination`).                                  |
 
 **Structure de l'objet `column`**
 
@@ -2305,8 +2312,9 @@ Le composant `InteractiveTable` est un tableau de données interactif et riche e
 - **Filtres avancés :** Utilisez la prop `filterConfig` pour ajouter des filtres de type sélecteur qui s'intègrent automatiquement.
 - **Sélection :** Cochez les cases pour sélectionner une ou plusieurs lignes. Une case à cocher dans l'en-tête permet de tout sélectionner.
 - **Actions :** Chaque ligne comporte des boutons d'action configurables.
-- **Pagination :** Navigation entre les pages de résultats avec indication du nombre total d'éléments.
+- **Pagination :** Navigation entre les pages de résultats avec indication du nombre total d'éléments. Toujours affichée en bas à droite du composant dès que `totalPages > 1`.
 - **Rendu personnalisé :** Possibilité de personnaliser l'affichage des cellules avec la fonction `renderCell`.
+- **Mode serveur (recherche + pagination externes) :** Activez `externalSearch` et `externalPagination` pour déléguer la recherche et la pagination à une API. Dans ce mode, `data` contient uniquement la page courante, et le composant ne filtre/pagine plus côté client.
 
 **Exemple d'utilisation**
 

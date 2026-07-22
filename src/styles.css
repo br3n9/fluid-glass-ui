@@ -37,17 +37,32 @@
   --fg-border-glass-light: hsla(var(--fg-neutral-hue), 20%, 100%, 0.2);
   --fg-border-glass-medium: hsla(var(--fg-neutral-hue), 20%, 100%, 0.3);
   --fg-border-glass-strong: hsla(var(--fg-neutral-hue), 20%, 100%, 0.4);
-  
+
   /* Variables pour overlays et backdrops */
   --fg-overlay-light: hsla(var(--fg-neutral-hue), 20%, 0%, 0.3);
   --fg-overlay-medium: hsla(var(--fg-neutral-hue), 20%, 0%, 0.5);
   --fg-overlay-strong: hsla(var(--fg-neutral-hue), 20%, 0%, 0.7);
-  
+
   /* Variables pour les états interactifs */
-  --fg-interactive-hover: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 90%, 0.1);
-  --fg-interactive-active: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 85%, 0.2);
-  --fg-interactive-focus: hsla(var(--fg-accent-hue), var(--fg-accent-saturation), 60%, 0.3);
-  
+  --fg-interactive-hover: hsla(
+    var(--fg-primary-hue),
+    var(--fg-primary-saturation),
+    90%,
+    0.1
+  );
+  --fg-interactive-active: hsla(
+    var(--fg-primary-hue),
+    var(--fg-primary-saturation),
+    85%,
+    0.2
+  );
+  --fg-interactive-focus: hsla(
+    var(--fg-accent-hue),
+    var(--fg-accent-saturation),
+    60%,
+    0.3
+  );
+
   /* Variables pour les icônes et éléments secondaires */
   --fg-icon-primary: var(--fg-text-secondary);
   --fg-icon-secondary: var(--fg-text-muted);
@@ -74,9 +89,9 @@
   --fg-radius-lg: 16px;
   --fg-radius-xl: 24px;
 
-  --fg-shadow-sm: 0 2px 8px hsla(var(--fg-neutral-hue), 20%, 0%, 0.1);
-  --fg-shadow-md: 0 4px 16px hsla(var(--fg-neutral-hue), 20%, 0%, 0.15);
-  --fg-shadow-lg: 0 8px 32px hsla(var(--fg-neutral-hue), 20%, 0%, 0.2);
+  --fg-shadow-sm: 0 2px 8px -2px hsla(var(--fg-neutral-hue), 20%, 0%, 0.1);
+  --fg-shadow-md: 0 4px 16px -4px hsla(var(--fg-neutral-hue), 20%, 0%, 0.15);
+  --fg-shadow-lg: 0 8px 32px -8px hsla(var(--fg-neutral-hue), 20%, 0%, 0.2);
 
   /* Animations */
   --fg-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -95,17 +110,32 @@
   --fg-border-glass-light: hsla(var(--fg-neutral-hue), 15%, 100%, 0.1);
   --fg-border-glass-medium: hsla(var(--fg-neutral-hue), 15%, 100%, 0.15);
   --fg-border-glass-strong: hsla(var(--fg-neutral-hue), 15%, 100%, 0.25);
-  
+
   /* Overlays pour mode sombre */
   --fg-overlay-light: hsla(var(--fg-neutral-hue), 20%, 0%, 0.4);
   --fg-overlay-medium: hsla(var(--fg-neutral-hue), 20%, 0%, 0.6);
   --fg-overlay-strong: hsla(var(--fg-neutral-hue), 20%, 0%, 0.8);
-  
+
   /* États interactifs pour mode sombre */
-  --fg-interactive-hover: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 15%, 0.3);
-  --fg-interactive-active: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 20%, 0.4);
-  --fg-interactive-focus: hsla(var(--fg-accent-hue), var(--fg-accent-saturation), 50%, 0.4);
-  
+  --fg-interactive-hover: hsla(
+    var(--fg-primary-hue),
+    var(--fg-primary-saturation),
+    15%,
+    0.3
+  );
+  --fg-interactive-active: hsla(
+    var(--fg-primary-hue),
+    var(--fg-primary-saturation),
+    20%,
+    0.4
+  );
+  --fg-interactive-focus: hsla(
+    var(--fg-accent-hue),
+    var(--fg-accent-saturation),
+    50%,
+    0.4
+  );
+
   /* Icônes pour mode sombre */
   --fg-icon-primary: var(--fg-text-secondary);
   --fg-icon-secondary: var(--fg-text-muted);
@@ -132,17 +162,32 @@
     --fg-border-glass-light: hsla(var(--fg-neutral-hue), 15%, 100%, 0.1);
     --fg-border-glass-medium: hsla(var(--fg-neutral-hue), 15%, 100%, 0.15);
     --fg-border-glass-strong: hsla(var(--fg-neutral-hue), 15%, 100%, 0.25);
-    
+
     /* Overlays pour mode sombre automatique */
     --fg-overlay-light: hsla(var(--fg-neutral-hue), 20%, 0%, 0.4);
     --fg-overlay-medium: hsla(var(--fg-neutral-hue), 20%, 0%, 0.6);
     --fg-overlay-strong: hsla(var(--fg-neutral-hue), 20%, 0%, 0.8);
-    
+
     /* États interactifs pour mode sombre automatique */
-    --fg-interactive-hover: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 15%, 0.3);
-    --fg-interactive-active: hsla(var(--fg-primary-hue), var(--fg-primary-saturation), 20%, 0.4);
-    --fg-interactive-focus: hsla(var(--fg-accent-hue), var(--fg-accent-saturation), 50%, 0.4);
-    
+    --fg-interactive-hover: hsla(
+      var(--fg-primary-hue),
+      var(--fg-primary-saturation),
+      15%,
+      0.3
+    );
+    --fg-interactive-active: hsla(
+      var(--fg-primary-hue),
+      var(--fg-primary-saturation),
+      20%,
+      0.4
+    );
+    --fg-interactive-focus: hsla(
+      var(--fg-accent-hue),
+      var(--fg-accent-saturation),
+      50%,
+      0.4
+    );
+
     /* Icônes pour mode sombre automatique */
     --fg-icon-primary: hsl(var(--fg-neutral-hue), 10%, 70%);
     --fg-icon-secondary: hsl(var(--fg-neutral-hue), 10%, 50%);
@@ -158,7 +203,11 @@
 }
 
 body {
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
   background: var(--fg-bg-primary);
   color: var(--fg-text-primary);
   line-height: 1.6;
@@ -205,7 +254,7 @@ body {
     backdrop-filter: blur(var(--fg-glass-blur));
     border: 1px solid var(--fg-border-glass-light);
     border-radius: var(--fg-radius-lg);
-    padding: var(--fg-space-md);
+    padding: var(--fg-space-sm);
     transition: var(--fg-transition-normal);
     position: relative;
   }
@@ -279,7 +328,7 @@ body {
 
   /* Card Footer */
   .card-footer {
-    margin-top: var(--fg-space-md);
+    margin-top: var(--fg-space-sm);
     display: flex;
     gap: var(--fg-space-sm);
     align-items: center;
@@ -362,7 +411,7 @@ body {
     cursor: pointer;
     font-size: var(--fg-text-base);
     font-weight: 600;
-    padding: var(--fg-space-sm) var(--fg-space-md);
+    padding: var(--fg-space-xs) var(--fg-space-sm);
     position: relative;
     overflow: hidden;
     transition: var(--fg-transition-fast);
@@ -436,7 +485,7 @@ body {
     border-radius: var(--fg-radius-md);
     color: var(--fg-text-primary);
     font-size: var(--fg-text-base);
-    padding: var(--fg-space-sm) var(--fg-space-md);
+    padding: var(--fg-space-xs) var(--fg-space-sm);
     transition: var(--fg-transition-fast);
     width: 100%;
     border-color: var(--fg-accent-primary);
@@ -472,6 +521,7 @@ body {
     display: flex;
     align-items: center;
     gap: var(--fg-space-xs);
+    white-space: nowrap;
   }
 
   .nav-item:hover {

@@ -76,7 +76,11 @@ export default function Modal({
         background: "var(--fg-overlay-medium)",
         zIndex: 9999,
       }}
-      onClick={onClose}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"

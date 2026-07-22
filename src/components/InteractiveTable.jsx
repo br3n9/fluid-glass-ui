@@ -22,6 +22,14 @@ export default function InteractiveTable({
   customFilters = null,
   filterConfig = [],
   onFilterChange,
+  // Props pour la gestion externe (pagination/recherche serveur)
+  externalSearch = false,
+  searchValue = "",
+  onSearchChange = null,
+  externalPagination = false,
+  totalItems = null,
+  currentPageExternal = 1,
+  onPageChangeExternal = null,
 }) {
   const [sortField, setSortField] = useState("");
   const [sortDirection, setSortDirection] = useState("asc");
@@ -83,7 +91,21 @@ export default function InteractiveTable({
   };
 
   const handlePageChange = (page) => {
-    setCurrentPage(page);
+    if (externalPagination && onPageChangeExternal) {
+      onPageChangeExternal(page);
+    } else {
+      setCurrentPage(page);
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    if (externalSearch && onSearchChange) {
+      onSearchChange(value);
+    } else {
+      setSearchTerm(value);
+      setCurrentPage(1);
+    }
   };
 
   // Handle filter changes
@@ -105,6 +127,9 @@ export default function InteractiveTable({
 
   // Filter data based on search term and filters
   const filteredData = useMemo(() => {
+    // En mode externe, on ne filtre pas côté client
+    if (externalSearch) return tableData;
+
     let result = tableData;
 
     // Apply search filter
@@ -114,13 +139,15 @@ export default function InteractiveTable({
         .map((col) => col.field);
 
       result = result.filter((item) => {
-        return searchableColumns.some((field) =>
-          String(item[field]).toLowerCase().includes(searchTerm.toLowerCase()),
-        );
+        return searchableColumns.some((field) => {
+          const val = item[field];
+          if (val === null || val === undefined) return false;
+          return String(val).toLowerCase().includes(searchTerm.toLowerCase());
+        });
       });
     }
 
-    // Apply custom filters
+    // Apply custom filters (seulement en mode interne)
     Object.entries(filters).forEach(([field, value]) => {
       if (value !== undefined && value !== null && value !== "") {
         result = result.filter((item) => {
@@ -135,16 +162,30 @@ export default function InteractiveTable({
     });
 
     return result;
-  }, [tableData, searchTerm, columns, filters]);
+  }, [tableData, searchTerm, columns, filters, externalSearch]);
 
   // Calculate pagination
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const effectiveTotalItems = externalPagination
+    ? (totalItems ?? tableData.length)
+    : filteredData.length;
+  const effectiveCurrentPage = externalPagination
+    ? currentPageExternal
+    : currentPage;
+  const totalPages = Math.ceil(effectiveTotalItems / itemsPerPage);
 
   // Get current page data
   const currentPageData = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
+    // En mode pagination externe, les données reçues sont déjà la bonne page
+    if (externalPagination) return tableData;
+    const startIndex = (effectiveCurrentPage - 1) * itemsPerPage;
     return filteredData.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredData, currentPage, itemsPerPage]);
+  }, [
+    filteredData,
+    effectiveCurrentPage,
+    itemsPerPage,
+    externalPagination,
+    tableData,
+  ]);
 
   const hasFilters = (filterConfig && filterConfig.length > 0) || customFilters;
 
@@ -174,8 +215,8 @@ export default function InteractiveTable({
           <Input
             type="text"
             placeholder="Rechercher..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={externalSearch ? searchValue : searchTerm}
+            onChange={handleSearchChange}
             startIcon={<Search size={20} />}
             className="w-full"
           />
@@ -392,17 +433,25 @@ export default function InteractiveTable({
       )}
 
       {/* Pagination */}
-      {filteredData.length > itemsPerPage && (
-        <div className="mt-6">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-            totalResults={filteredData.length}
-            resultsPerPage={itemsPerPage}
-          />
-        </div>
-      )}
+      <div className="mt-6">
+        {effectiveTotalItems > 0 &&
+          (totalPages > 1 ? (
+            <Pagination
+              currentPage={effectiveCurrentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              totalResults={effectiveTotalItems}
+              resultsPerPage={itemsPerPage}
+            />
+          ) : (
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-gray-600">
+                {effectiveTotalItems} résultat
+                {effectiveTotalItems > 1 ? "s" : ""}
+              </p>
+            </div>
+          ))}
+      </div>
     </section>
   );
 }
